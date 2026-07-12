@@ -1,0 +1,50 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+package-lock.json
+yarn.lock
+
+# Dependency directories
+node_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
+.env
+.env.test
+
+# Editor files
+*~
+*.sw[nop]
+/.vscode/*
+!/.vscode/extensions.json
+!/.vscode/settings.json
+.idea/
+
+# Output
+dist
+
+# Playwright
+playwright-report*/
+test-results*/
+
+# Vite
+.vite/
+
+# Coverage
+coverage
+*.lcov
+
+# Dev-sync provisioned grants (local only, contains delegated zcaps)
+dev-grants.local.json
+public/dev-grants.local.json
+*.local.json
+
+# MacOS
+.DS_Store
