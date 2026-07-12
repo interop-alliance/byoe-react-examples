@@ -1,4 +1,7 @@
-# BYOE Notes _(byoe-react-template)_
+# BYOE Notes _(@interop/byoe-react-template)_
+
+[![Node.js CI](https://github.com/interop-alliance/byoe-react-template/workflows/CI/badge.svg)](https://github.com/interop-alliance/byoe-react-template/actions?query=workflow%3A%22CI%22)
+[![NPM Version](https://img.shields.io/npm/v/@interop/byoe-react-template.svg)](https://npm.im/@interop/byoe-react-template)
 
 > A template for building "Bring Your Own Everything" (BYOE) apps on Wallet
 > Attached Storage: a Vite + React + TypeScript SPA with DID-Auth login via a

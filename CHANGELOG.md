@@ -2,6 +2,11 @@
 
 ## 0.1.0 - TBD
 
+### Changed
+
+- Scoped the package name to `@interop/byoe-react-template` (the unscoped
+  `byoe-react-template` npm package is deprecated).
+
 ### Added
 
 - Initial BYOE app template: a Vite + React + TypeScript SPA built on
