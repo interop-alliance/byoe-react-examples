@@ -1,11 +1,6 @@
 # Changelog
 
-## 0.1.0 - TBD
-
-### Changed
-
-- Scoped the package name to `@interop/byoe-react-template` (the unscoped
-  `byoe-react-template` npm package is deprecated).
+## 0.1.0-0.1.1 - 2026-07-12
 
 ### Added
 

@@ -1,7 +1,7 @@
 {
   "name": "@interop/byoe-react-template",
   "description": "Template for building 'Bring Your Own Everything' (BYOE) apps on Wallet Attached Storage: a Vite + React + TypeScript SPA with DID Auth login via a CHAPI wallet, local-first encrypted storage, and background sync, built on @interop/was-react.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -53,8 +53,24 @@
     "node": ">=24.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
+  "keywords": [
+    "byoe",
+    "chapi",
+    "wallet-attached-storage",
+    "did-auth",
+    "local-first",
+    "react",
+    "template"
+  ],
   "author": "Interop Alliance (https://github.com/interop-alliance/)",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interop-alliance/byoe-react-template.git"
+  },
+  "homepage": "https://github.com/interop-alliance/byoe-react-template",
+  "bugs": "https://github.com/interop-alliance/byoe-react-template/issues"
 }
