@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased - TBD
+
+### Fixed
+
+- Dev bootstrap now un-caches a failed `initApp` attempt (resets the in-flight
+  promise on error), so a retry re-runs initialization instead of getting the
+  same rejected promise back forever.
+
 ## 0.1.0-0.1.1 - 2026-07-12
 
 ### Added
