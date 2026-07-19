@@ -18,8 +18,9 @@ const env: Record<string, string | undefined> =
 export const APP_ORIGIN = env.VITE_APP_ORIGIN || 'http://localhost:5173'
 
 // Auth mode: 'wallet' (default) gates the app behind Login With Wallet
-// (CHAPI); 'dev' boots straight into a local dev-seed store with no login
-// gate (offline-first, optionally dev-syncing under VITE_WAS_DEV_SYNC).
+// (CHAPI); 'dev' boots straight into the local anonymous replica with no login
+// gate (local-first, optionally dev-connecting under VITE_WAS_DEV_SYNC). It
+// maps onto the library's `onboarding` mode below.
 export const AUTH_MODE: 'dev' | 'wallet' =
   env.VITE_AUTH_MODE === 'dev' ? 'dev' : 'wallet'
 
@@ -61,6 +62,10 @@ export const appConfig: WasAppConfig = {
   appName: 'BYOE Notes',
   appOrigin: APP_ORIGIN,
   wasServerUrl: WAS_SERVER_URL,
+  // Wallet mode gates the app behind login; dev mode is local-first (a usable
+  // anonymous replica with no login gate). Only affects the router's rendering,
+  // never the store's transitions.
+  onboarding: AUTH_MODE === 'wallet' ? 'login-gated' : 'local-first',
   collections: COLLECTIONS,
   credential: {
     credentialType: 'ByoeNotesAppKey',
