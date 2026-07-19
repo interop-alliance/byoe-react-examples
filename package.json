@@ -1,60 +1,36 @@
 {
-  "name": "@interop/byoe-react-template",
-  "description": "Template for building 'Bring Your Own Everything' (BYOE) apps on Wallet Attached Storage: a Vite + React + TypeScript SPA with DID Auth login via a CHAPI wallet, local-first encrypted storage, and background sync, built on @interop/was-react.",
+  "name": "byoe-react-examples",
+  "description": "Examples for building 'Bring Your Own Everything' (BYOE) apps on Wallet Attached Storage with @interop/was-react: one example app per tier, from a single-document local-first game save to a wallet-gated multi-collection CRUD app.",
   "version": "0.1.1",
+  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit -p tsconfig.dev.json && vite build",
-    "typecheck": "tsc --noEmit -p tsconfig.dev.json",
-    "fix": "eslint --fix src test && pnpm run format",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"test/**/*.ts\" \"scripts/**/*.ts\" \"*.md\"",
-    "lint": "eslint src test scripts",
+    "dev:notes": "pnpm --filter byoe-notes-example run dev",
+    "dev:save-file": "pnpm --filter byoe-save-file-example run dev",
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "fix": "eslint --fix examples && pnpm run format",
+    "format": "prettier --write \"*.md\" \"docs/**/*.md\" \"examples/*/src/**/*.{ts,tsx}\" \"examples/*/test/**/*.ts\" \"examples/*/scripts/**/*.ts\" \"examples/*/*.md\"",
+    "lint": "eslint examples",
     "test": "pnpm run lint && pnpm run test:node",
-    "test:browser": "playwright test",
-    "test:browser:was": "playwright test -c playwright.was.config.ts",
-    "test:browser:wallet": "playwright test -c playwright.wallet.config.ts",
-    "test:node": "vitest run",
-    "provision:dev": "tsx scripts/provision-dev-grants.ts"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@interop/was-react": "^0.1.7",
-    "@mui/icons-material": "^9.0.0",
-    "@mui/material": "^9.0.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router": "^8.1.0",
-    "rxdb": "^17.0.0",
-    "uuidv7": "^1.2.1",
-    "zustand": "^5.0.12"
+    "test:node": "pnpm -r run test:node",
+    "test:browser": "pnpm -r --workspace-concurrency=1 run test:browser",
+    "test:browser:was": "pnpm --filter byoe-notes-example run test:browser:was",
+    "test:browser:wallet": "pnpm --filter byoe-notes-example run test:browser:wallet",
+    "provision:dev": "pnpm --filter byoe-notes-example run provision:dev"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.60.0",
-    "@types/node": "^26.0.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.0",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
-    "fake-indexeddb": "^6.0.0",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
-    "tsx": "^4.20.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.4",
-    "vite": "^8.0.14",
-    "vitest": "^4.1.7"
+    "typescript-eslint": "^8.59.4"
   },
   "packageManager": "pnpm@11.9.0",
   "engines": {
     "node": ">=24.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
   },
   "keywords": [
     "byoe",
@@ -63,14 +39,14 @@
     "did-auth",
     "local-first",
     "react",
-    "template"
+    "examples"
   ],
   "author": "Interop Alliance (https://github.com/interop-alliance/)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/interop-alliance/byoe-react-template.git"
+    "url": "git+https://github.com/interop-alliance/byoe-react-examples.git"
   },
-  "homepage": "https://github.com/interop-alliance/byoe-react-template",
-  "bugs": "https://github.com/interop-alliance/byoe-react-template/issues"
+  "homepage": "https://github.com/interop-alliance/byoe-react-examples",
+  "bugs": "https://github.com/interop-alliance/byoe-react-examples/issues"
 }

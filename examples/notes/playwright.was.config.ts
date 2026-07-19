@@ -1,7 +1,7 @@
 /**
  * WAS-backed Playwright config: real replication against a local
- * was-teaching-server booted from a sibling checkout (override with
- * WAS_SERVER_DIR), with dev grants provisioned in globalSetup. The app runs
+ * was-teaching-server booted from the npm package (see
+ * test/lib/startWasServer.ts), with dev grants provisioned in globalSetup. The app runs
  * in dev auth mode with dev-sync on, on a dedicated port so it never clashes
  * with the offline suite's dev server. Tests are serialized (a single shared
  * Space).
@@ -10,7 +10,7 @@
  */
 import { defineConfig, devices } from '@playwright/test'
 
-const APP_PORT = 5174
+const APP_PORT = 5175
 export const WAS_PORT = Number(process.env.WAS_E2E_PORT ?? 3102)
 export const WAS_URL = `http://localhost:${WAS_PORT}`
 

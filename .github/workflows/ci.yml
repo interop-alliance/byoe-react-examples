@@ -37,8 +37,10 @@ jobs:
       - name: Test (Node)
         run: pnpm run test:node
 
+      # The examples share one Playwright version (and the shared browser
+      # cache), so installing from any one of them covers all suites.
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: pnpm --filter byoe-notes-example exec playwright install --with-deps chromium
 
       - name: Test (Browser)
         run: pnpm run test:browser

@@ -41,6 +41,9 @@ test-results*/
 coverage
 *.lcov
 
+# E2e caches: WAS server state and the cached freewallet clone
+.e2e/
+
 # Dev-sync provisioned grants (local only, contains delegated zcaps)
 dev-grants.local.json
 public/dev-grants.local.json

@@ -1,0 +1,46 @@
+{
+  "name": "byoe-notes-example",
+  "description": "Tier-2 BYOE example (the original template app): a Vite + React + TypeScript SPA with DID Auth login via a CHAPI wallet, local-first encrypted storage, and background sync to WAS, built on @interop/was-react.",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.dev.json && vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.dev.json",
+    "test:node": "vitest run",
+    "test:browser": "playwright test",
+    "test:browser:was": "playwright test -c playwright.was.config.ts",
+    "test:browser:wallet": "playwright test -c playwright.wallet.config.ts",
+    "provision:dev": "tsx scripts/provision-dev-grants.ts"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@interop/was-react": "^0.1.7",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router": "^8.1.0",
+    "rxdb": "^17.0.0",
+    "uuidv7": "^1.2.1",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^26.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.0",
+    "fake-indexeddb": "^6.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7",
+    "was-teaching-server": "^0.9.1"
+  },
+  "engines": {
+    "node": ">=24.0"
+  }
+}
