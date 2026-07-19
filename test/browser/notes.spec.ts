@@ -1,9 +1,10 @@
 /**
- * Offline (mocked) tier: the app boots through the dev gate into the Notes page
- * over the encrypted local replica -- no wallet, no WAS server. Adds / edits /
- * deletes a note, proves persistence across a reload (IndexedDB), and checks the
- * sync chip advertises local-only mode. Each test runs in an isolated browser
- * context (fresh IndexedDB), so no cross-test cleanup.
+ * Offline (mocked) tier: the app boots into local state (the encrypted
+ * anonymous replica) and renders the Notes page directly -- no wallet, no WAS
+ * server. Adds / edits / deletes a note, proves persistence across a reload
+ * (IndexedDB), checks the sync chip advertises local-only mode, and clears the
+ * local data. Each test runs in an isolated browser context (fresh IndexedDB),
+ * so no cross-test cleanup.
  */
 import { test, expect, type Page } from '@playwright/test'
 
@@ -26,9 +27,7 @@ test.beforeEach(async ({ page }) => {
   await bootToNotes(page)
 })
 
-test('boots through the dev gate into an empty Notes page', async ({
-  page
-}) => {
+test('boots into local state with an empty Notes page', async ({ page }) => {
   await expect(page.getByTestId('notes-empty')).toBeVisible()
   await expect(page.getByTestId('notes-list')).toHaveCount(0)
 })
@@ -79,4 +78,26 @@ test('sync chip advertises local-only (offline) mode', async ({ page }) => {
   await expect(chip).toBeVisible()
   await expect(chip).toHaveText(/Offline/)
   await expect(chip).toHaveAttribute('data-sync-state', 'offline')
+})
+
+test('clears local data, emptying notes and staying empty across reload', async ({
+  page
+}) => {
+  await addNote(page, 'Erase me')
+  await expect(page.getByTestId('notes-list')).toBeVisible()
+
+  // Open the Clear data dialog from the app shell and confirm the destructive
+  // reset (deletes the local replica, mints a fresh anonymous seed/DID).
+  await page.getByTestId('clear-data-button').click()
+  await page.getByTestId('clear-data-confirm').click()
+
+  // The reset lands a fresh, empty local replica; the app stays usable.
+  await expect(page.getByTestId('notes-empty')).toBeVisible()
+  await expect(page.getByText('Erase me')).toHaveCount(0)
+
+  // A reload boots the same (new) anonymous seed: still empty, nothing recovered.
+  await page.reload()
+  await expect(page.getByTestId('bootstrap-loading')).toHaveCount(0)
+  await expect(page.getByTestId('notes-empty')).toBeVisible()
+  await expect(page.getByText('Erase me')).toHaveCount(0)
 })

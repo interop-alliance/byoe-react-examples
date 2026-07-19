@@ -130,9 +130,7 @@ test('an edit replicates to a second fresh profile', async ({ browser }) => {
   await ctxB.close()
 })
 
-test('a delete replicates to a second fresh profile', async ({
-  browser
-}) => {
+test('a delete replicates to a second fresh profile', async ({ browser }) => {
   const text = `del-${Date.now()}`
   const ctxA = await browser.newContext()
   const a = await openProfile(ctxA)

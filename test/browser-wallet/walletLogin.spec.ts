@@ -296,10 +296,13 @@ test('login with wallet: first login, replication, logout/login recovery', async
     { timeout: 45_000 }
   )
 
-  /* Phase 3: logout wipes the session; login again = returning path (the wallet
-     returns the stored app key; no store() this time), the note is recovered
-     from WAS. */
+  /* Phase 3: log out choosing the wipe option (erases the local replica), so
+     the returning login must recover the note from WAS rather than from local
+     storage. Login again = returning path (the wallet returns the stored app
+     key; no store() this time). Logout lands `local`; the login-gated router
+     redirects to /login. */
   await appPage.getByRole('button', { name: 'log out' }).click()
+  await appPage.getByTestId('logout-wipe').click()
   await expect(
     appPage.getByRole('button', { name: 'Login with wallet' })
   ).toBeVisible({ timeout: 15_000 })

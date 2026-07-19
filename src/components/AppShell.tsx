@@ -1,13 +1,16 @@
 /**
  * The app layout: a top bar with the app name, the library's `SyncStatusChip`
- * (offline / syncing / synced / error rollup), and a logout button (wallet
- * mode only), with the `ReconnectBanner` (shown when granted access nears
- * expiry) above the routed page content.
+ * (offline / syncing / synced / error rollup), and a status-driven control --
+ * a "Log out" button (opening `LogoutDialog`) when connected, or a "Clear data"
+ * button (opening `ClearDataDialog`) in local mode -- with the `ReconnectBanner`
+ * (shown when granted access nears expiry) above the routed page content.
  */
-import { Outlet, useNavigate } from 'react-router'
+import { useState } from 'react'
+import { Outlet } from 'react-router'
 import {
   AppBar,
   Box,
+  Button,
   Container,
   IconButton,
   Toolbar,
@@ -15,18 +18,19 @@ import {
   Typography
 } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { useLogout } from '@interop/was-react'
-import { ReconnectBanner, SyncStatusChip } from '@interop/was-react/mui'
-import { AUTH_MODE } from '@/app.config'
+import { useSession } from '@interop/was-react'
+import {
+  ClearDataDialog,
+  LogoutDialog,
+  ReconnectBanner,
+  SyncStatusChip
+} from '@interop/was-react/mui'
 
 export function AppShell() {
-  const logout = useLogout()
-  const navigate = useNavigate()
-
-  async function handleLogout() {
-    await logout()
-    navigate('/login')
-  }
+  const { status } = useSession()
+  const [logoutOpen, setLogoutOpen] = useState(false)
+  const [clearOpen, setClearOpen] = useState(false)
+  const connected = status === 'connected' || status === 'reconnect'
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
@@ -36,16 +40,24 @@ export function AppShell() {
             BYOE Notes
           </Typography>
           <SyncStatusChip />
-          {AUTH_MODE === 'wallet' && (
+          {connected ? (
             <Tooltip title="Log out">
               <IconButton
                 color="inherit"
                 aria-label="log out"
-                onClick={() => void handleLogout()}
+                onClick={() => setLogoutOpen(true)}
               >
                 <LogoutIcon />
               </IconButton>
             </Tooltip>
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => setClearOpen(true)}
+              data-testid="clear-data-button"
+            >
+              Clear data
+            </Button>
           )}
         </Toolbar>
       </AppBar>
@@ -53,6 +65,8 @@ export function AppShell() {
       <Container maxWidth="sm" sx={{ py: 4 }}>
         <Outlet />
       </Container>
+      <LogoutDialog open={logoutOpen} onClose={() => setLogoutOpen(false)} />
+      <ClearDataDialog open={clearOpen} onClose={() => setClearOpen(false)} />
     </Box>
   )
 }
