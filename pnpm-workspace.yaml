@@ -1,5 +1,9 @@
+packages:
+  - .
+  - examples/*
 allowBuilds:
   core-js: false
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@interop/was-react@0.1.7'
+  - '@interop/was-react@0.1.7 || 0.1.8'
+  - was-teaching-server@0.9.1

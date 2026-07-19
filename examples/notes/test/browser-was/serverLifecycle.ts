@@ -5,11 +5,11 @@
  * in the same Playwright runner process, so the child handle is stashed on
  * `globalThis`.
  *
- * The was-teaching-server checkout is READ-ONLY and run as-is
- * (`tsx src/start.ts`); we only set its SERVER_URL / PORT env, which MUST match
- * the URL the client builds from the granted zcaps' invocationTargets. The
- * server directory defaults to the sibling checkout and is overridable via
- * WAS_SERVER_DIR.
+ * The server comes from the `was-teaching-server` npm package (a
+ * devDependency of this example), booted via `test/lib/startWasServer.ts`
+ * with its state in the git-ignored `.e2e/was-data` (wiped on every boot) --
+ * no server checkout is needed. SERVER_URL / PORT MUST match the URL the
+ * client builds from the granted zcaps' invocationTargets.
  */
 import { spawn, execFile, type ChildProcess } from 'node:child_process'
 import { promisify } from 'node:util'
@@ -19,14 +19,12 @@ import { fileURLToPath } from 'node:url'
 const execFileAsync = promisify(execFile)
 
 const here = dirname(fileURLToPath(import.meta.url))
-const repoRoot = join(here, '..', '..')
+const appRoot = join(here, '..', '..')
 
 export const WAS_PORT = Number(process.env.WAS_E2E_PORT ?? 3102)
 export const WAS_SERVER_URL = `http://localhost:${WAS_PORT}`
-export const WAS_SERVER_DIR =
-  process.env.WAS_SERVER_DIR ?? join(repoRoot, '..', 'was-teaching-server')
 
-const HANDLE_KEY = Symbol.for('byoe-react-template.was-e2e.server')
+const HANDLE_KEY = Symbol.for('byoe-react-examples.was-e2e.server')
 
 interface Stash {
   child?: ChildProcess
@@ -57,24 +55,28 @@ async function waitForServer(timeoutMs = 20000): Promise<void> {
 
 /** Boots the server and runs the provisioning script. Called by globalSetup. */
 export async function startServerAndProvision(): Promise<void> {
-  const child = spawn('npx', ['tsx', 'src/start.ts'], {
-    cwd: WAS_SERVER_DIR,
-    env: {
-      ...process.env,
-      SERVER_URL: WAS_SERVER_URL,
-      PORT: String(WAS_PORT),
-      STORAGE_LIMIT_PER_SPACE: 'unlimited'
-    },
-    detached: true,
-    stdio: 'ignore'
-  })
+  const child = spawn(
+    'npx',
+    ['tsx', join('test', 'lib', 'startWasServer.ts')],
+    {
+      cwd: appRoot,
+      env: {
+        ...process.env,
+        SERVER_URL: WAS_SERVER_URL,
+        PORT: String(WAS_PORT),
+        DATA_DIR: join('.e2e', 'was-data')
+      },
+      detached: true,
+      stdio: 'ignore'
+    }
+  )
   child.unref()
   stash().child = child
 
   await waitForServer()
 
   await execFileAsync('npx', ['tsx', 'scripts/provision-dev-grants.ts'], {
-    cwd: repoRoot,
+    cwd: appRoot,
     env: { ...process.env, SERVER_URL: WAS_SERVER_URL }
   })
 }
