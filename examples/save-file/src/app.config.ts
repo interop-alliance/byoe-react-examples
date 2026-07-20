@@ -16,26 +16,34 @@ const env: Record<string, string | undefined> =
 // credential. Must match the URL the app is actually served from.
 export const APP_ORIGIN = env.VITE_APP_ORIGIN || 'http://localhost:5174'
 
-// Remote WAS server URL: the expected host of every granted zcap's
-// invocationTarget once the user connects a wallet.
-export const WAS_SERVER_URL = env.VITE_WAS_SERVER_URL || 'http://localhost:3002'
+// The document before the first write: a short welcome explaining how the app
+// works. It is ordinary document text -- edit or delete it and the change
+// persists like any other; Clear Data restores it with the fresh document.
+const INITIAL_TEXT = `Welcome to the Text Editor example app.
 
-/** The one document this app is about: a game save file. */
-export interface SaveFile {
-  minerals: number
-  drillLevel: number
+Everything you type here is saved automatically to encrypted storage on this device. Edit this text, reload the page, and it is still here -- no account needed.
+
+To keep a copy, use "Export (Download) File" and bring it back later with "Import (Load) File". Or click "Save to Web Spaces" to connect your wallet and sync this document to your own Web Space.
+
+"Clear Data" erases the copy on this device and starts over with this welcome text.`
+
+/** The one document this app is about: the text in a single textbox. */
+export interface TextDocument {
+  text: string
 }
 
-export const { config, registry, useDocument } = defineDocumentApp<SaveFile>({
-  appName: 'Space Miner',
-  appOrigin: APP_ORIGIN,
-  wasServerUrl: WAS_SERVER_URL,
-  document: {
-    collectionId: 'space-miner-save',
-    initial: { minerals: 0, drillLevel: 1 }
-  },
-  credential: {
-    credentialType: 'SpaceMinerAppKey',
-    vocabBase: 'urn:space-miner:vocab#'
-  }
-})
+export const { config, registry, useDocument } =
+  defineDocumentApp<TextDocument>({
+    appName: 'Text Editor',
+    appOrigin: APP_ORIGIN,
+    document: {
+      collectionId: 'text-editor-document',
+      initial: { text: INITIAL_TEXT }
+    },
+    credential: {
+      credentialType: 'TextEditorAppKey',
+      vocabBase: 'urn:text-editor:vocab#'
+    },
+    dbName: 'text-editor',
+    storageKeyPrefix: 'text-editor:'
+  })

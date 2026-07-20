@@ -20,11 +20,11 @@ app-private vs well-known interop collections, how much the app does before
 "Login with Wallet" -- but in practice those axes correlate into a ladder of
 tiers, each a superset of the one below:
 
-| Tier | Shape                                                                          | Example app                                  | Library entry point                  |
-| ---- | ------------------------------------------------------------------------------ | -------------------------------------------- | ------------------------------------ |
-| 1    | One app-private document, key-value read/write                                 | A game save file; an Excalidraw-style editor | `defineDocumentApp` / `useDocument`  |
-| 2    | Read/write CRUD on one or two well-known interop collections                   | A contacts manager; a notes app              | `createEntityStore` + `WasAppConfig` |
-| 3    | Several well-known and app-specific collections, encrypted and public-readable | A microblogging client                       | (planned)                            |
+| Tier | Shape                                                                          | Example app                               | Library entry point                  |
+| ---- | ------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------------ |
+| 1    | One app-private document, key-value read/write                                 | A text editor; an Excalidraw-style canvas | `defineDocumentApp` / `useDocument`  |
+| 2    | Read/write CRUD on one or two well-known interop collections                   | A contacts manager; a notes app           | `createEntityStore` + `WasAppConfig` |
+| 3    | Several well-known and app-specific collections, encrypted and public-readable | A microblogging client                    | (planned)                            |
 
 The tiers are library _layers_, not different app architectures: a tier-1 app is
 expressible without ever seeing entity stores, grants, or sync internals, and
@@ -66,36 +66,37 @@ Two consequences of taking the `local` state seriously:
   example's connect button adopts silently (one document, nothing to ask about).
 - **Vocabulary.** In `local` mode there is no identity to log out of, so apps
   should never label the reset action "Logout." The save-file example calls it
-  **Clear data**: it destroys the local replica after a confirm dialog that
+  **Clear Data**: it destroys the local replica after a confirm dialog that
   offers a download first. Keeping "log out" (detach identity) and "clear data"
   (destroy the replica) as visibly separate operations is part of the point of
   BYOE -- users learn where their data actually lives.
 
 ## Tier 1: one document (`examples/save-file`)
 
-Space Miner is a browser game whose entire model is one save file. The whole
+Text Editor is a one-textbox app whose entire model is that text. The whole
 was-react wiring is one call in
 [`app.config.ts`](../examples/save-file/src/app.config.ts):
 
 ```ts
-export interface SaveFile {
-  minerals: number
-  drillLevel: number
+export interface TextDocument {
+  text: string
 }
 
-export const { config, registry, useDocument } = defineDocumentApp<SaveFile>({
-  appName: 'Space Miner',
-  appOrigin: APP_ORIGIN,
-  wasServerUrl: WAS_SERVER_URL,
-  document: {
-    collectionId: 'space-miner-save',
-    initial: { minerals: 0, drillLevel: 1 }
-  },
-  credential: {
-    credentialType: 'SpaceMinerAppKey',
-    vocabBase: 'urn:space-miner:vocab#'
-  }
-})
+export const { config, registry, useDocument } =
+  defineDocumentApp<TextDocument>({
+    appName: 'Text Editor',
+    appOrigin: APP_ORIGIN,
+    document: {
+      collectionId: 'text-editor-document',
+      initial: { text: INITIAL_TEXT }
+    },
+    credential: {
+      credentialType: 'TextEditorAppKey',
+      vocabBase: 'urn:text-editor:vocab#'
+    },
+    dbName: 'text-editor',
+    storageKeyPrefix: 'text-editor:'
+  })
 ```
 
 `main.tsx` spreads the returned `config` and `registry` into the standard
@@ -106,8 +107,9 @@ const { doc, update, status, exportFile, importFile, connect, disconnect } =
   useDocument()
 ```
 
-- `doc` is the current document (`SaveFile`), falling back to `document.initial`
-  once boot completes; `update(patch | fn)` merges and persists.
+- `doc` is the current document (`TextDocument`), falling back to
+  `document.initial` once boot completes; `update(patch | fn)` merges and
+  persists.
 - `exportFile` / `importFile` move the document as a tagged JSON file, so the
   app is complete with zero WAS infrastructure -- the local / download / cloud
   triad users know from Excalidraw or draw.io.
@@ -119,7 +121,7 @@ const { doc, update, status, exportFile, importFile, connect, disconnect } =
 
 What the tier-1 developer never sees: entity stores, the store registry, grants,
 replication internals. If your app is one document, this is the whole API -- the
-rest of the example is game code.
+rest of the example is editor code.
 
 ## Growing up: from tier 1 to tier 2
 
@@ -129,7 +131,7 @@ Diff the two examples and every difference is one of these five moves:
    becomes a `COLLECTIONS` list in a `WasAppConfig`, mapping each app-side `key`
    to a WAS collection `id`. Interop lives in those ids: `notes` is deliberately
    generic, shared by any app that speaks "notes," where tier 1's
-   `space-miner-save` was deliberately app-private.
+   `text-editor-document` was deliberately app-private.
 2. **`useDocument` becomes entity stores.** Each collection gets a
    `createEntityStore<T>(key)` (a zustand `Map<uuid, T>` hydrated from the
    encrypted replica) and a `StoreRegistry` entry wiring its `hydrate` /
@@ -189,7 +191,15 @@ for turning the example into your own app.
   from the library's `getDeviceId()`).
 - **Collection ids are the interop surface.** Use a generic, unprefixed id
   (`notes`, `contacts`) when you intend other apps to read the same data; use an
-  app-named id (`space-miner-save`) for app-private sandbox data.
+  app-named id (`text-editor-document`) for app-private sandbox data. The two
+  examples show both: notes asks for the shared `notes` id, the editor keeps its
+  document to itself.
+- **Local storage names are the opposite of the interop surface.** `dbName` and
+  `storageKeyPrefix` name the encrypted replica and the device/seed keys in
+  *this browser*, so give every app its own. Left at the library defaults, two
+  apps served from one origin (two examples on `localhost`, say) collide on a
+  single database, and the second to open it dead-ends in `boot`. Pin a distinct
+  dev-server port per app for the same reason.
 - **Everything is encrypted client-side.** The WAS server stores opaque JWE
   envelopes; it can neither read nor search plaintext. This also means the key
   material for the anonymous `local` replica lives in browser storage -- on a

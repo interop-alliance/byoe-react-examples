@@ -1,6 +1,6 @@
 {
   "name": "byoe-save-file-example",
-  "description": "Tier-1 BYOE example: a browser game whose whole model is one save-file document (useDocument) -- local-first, file export/import, optional 'Save to Web Spaces' wallet connect.",
+  "description": "Tier-1 BYOE example: a text editor whose whole model is one document (useDocument) -- local-first, file export/import, optional 'Save to Web Spaces' wallet connect.",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@interop/was-react": "^0.1.8",
+    "@interop/was-react": "^0.2.2",
     "@mui/icons-material": "^9.0.0",
     "@mui/material": "^9.0.0",
     "react": "^19.2.4",

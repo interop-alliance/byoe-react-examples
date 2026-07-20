@@ -1,10 +1,9 @@
 /**
- * Wallet-login (Login With Wallet) Playwright config. Boots three servers,
- * none of which need a pre-existing checkout: a local was-teaching-server
- * (from the npm package, via test/lib/startWasServer.ts), the freewallet dev
- * server (cloned into the git-ignored .e2e/ on first run, or a local checkout
- * via FREEWALLET_DIR -- see test/lib/startWallet.ts), and this app in wallet
- * auth mode. CHAPI is driven through the library's non-production e2e bridge
+ * Wallet-login (Login With Wallet) Playwright config. Boots three servers: a
+ * local was-teaching-server (from the npm package, via
+ * test/lib/startWasServer.ts), the freewallet dev server (from a local
+ * checkout named by FREEWALLET_DIR -- see test/lib/startWallet.ts), and this
+ * app in wallet auth mode. CHAPI is driven through the library's non-production e2e bridge
  * (no mediator). Ports are distinct from every other suite so configs can
  * never clash.
  *
@@ -57,7 +56,7 @@ export default defineConfig({
     {
       // freewallet dev server pointed at the local WAS server (its KMS rides
       // on the WAS server's in-process /kms facet). The generous timeout
-      // covers the first-run clone + install.
+      // covers a first-use dependency install in the checkout.
       command: 'pnpm exec tsx test/lib/startWallet.ts',
       url: WALLET_URL,
       reuseExistingServer: false,
@@ -75,7 +74,6 @@ export default defineConfig({
       env: {
         VITE_AUTH_MODE: 'wallet',
         VITE_APP_ORIGIN: APP_URL,
-        VITE_WAS_SERVER_URL: WAS_URL,
         VITE_WAS_SYNC_RETRY_MS: '1500',
         VITE_WAS_SYNC_POLL_MS: '1500'
       },

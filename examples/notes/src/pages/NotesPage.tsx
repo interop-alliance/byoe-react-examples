@@ -22,6 +22,9 @@ import { uuidv7 } from 'uuidv7'
 import { getDeviceId } from '@interop/was-react'
 import { useNotes, type Note } from '@/stores/notes'
 
+/** This app's device id, under the library's default localStorage key. */
+const deviceId = () => getDeviceId()
+
 function NoteRow({ note }: { note: Note }) {
   const update = useNotes(state => state.update)
   const remove = useNotes(state => state.remove)
@@ -35,7 +38,7 @@ function NoteRow({ note }: { note: Note }) {
         ...note,
         text,
         updatedAt: new Date().toISOString(),
-        deviceId: getDeviceId()
+        deviceId: deviceId()
       })
     }
     setEditing(false)
@@ -122,7 +125,7 @@ export function NotesPage() {
       text: trimmed,
       createdAt: now,
       updatedAt: now,
-      deviceId: getDeviceId()
+      deviceId: deviceId()
     })
     setText('')
   }

@@ -64,7 +64,7 @@ covers what the example ships and how to make it your own.
   in-memory store hydrated from the encrypted local replica and replicated to
   WAS in the background.
 - An **MUI app shell** (`src/components/AppShell.tsx`): a top bar with the app
-  name, the library's `SyncStatusChip` (offline / syncing / synced / error), a
+  name, the library's `SyncStatusChip` (local-only / syncing / synced / error), a
   logout button, and the `ReconnectBanner` shown when granted access nears
   expiry.
 - A **dev provisioning script** (`scripts/provision-dev-grants.ts`) for syncing
@@ -144,7 +144,6 @@ All are optional; see `src/app.config.ts` for the defaults.
 | ------------------------- | ------------------------ | ------------------------------------------------------------------ |
 | `VITE_AUTH_MODE`          | `wallet`                 | `wallet` (login-gated) or `dev` (local-first, no login gate).      |
 | `VITE_APP_ORIGIN`         | `http://localhost:5173`  | This app's origin; the CHAPI anti-phishing binding on the app key. |
-| `VITE_WAS_SERVER_URL`     | `http://localhost:3002`  | Remote WAS server; the expected host of every granted zcap.        |
 | `VITE_WAS_DEV_SYNC`       | `false`                  | Dev mode only: replicate to WAS using a provisioned grants file.   |
 | `VITE_WAS_DEV_GRANTS_URL` | `/dev-grants.local.json` | Where the app fetches the dev grants JSON from.                    |
 | `VITE_WAS_SYNC_RETRY_MS`  | (library default)        | Replication retry backoff, in ms.                                  |
@@ -203,10 +202,10 @@ Then, to turn "BYOE Notes" into your own app:
 
 ## Testing
 
-The example has three browser test tiers plus a Node unit tier. All of them are
-self-contained: no other checkouts are needed (the WAS server comes from the
-`was-teaching-server` npm package; the wallet tier fetches freewallet on first
-run). The offline tier is the CI-suitable default.
+The example has three browser test tiers plus a Node unit tier. The first two
+browser tiers are self-contained (the WAS server comes from the
+`was-teaching-server` npm package); the wallet tier additionally needs a local
+freewallet checkout. The offline tier is the CI-suitable default.
 
 ```
 pnpm run test:node          # Vitest + fake-indexeddb, Node (no browser)
@@ -225,10 +224,10 @@ pnpm run test:browser:wallet # Playwright full wallet login flow; local/manual
   to the git-ignored `.e2e/`, wiped per run), provisions dev grants, and
   exercises real replication in dev-sync mode.
 - **`test:browser:wallet`** (`playwright.wallet.config.ts`) boots the WAS server
-  the same way, plus a `freewallet` dev server: on first run freewallet is
-  cloned into `.e2e/freewallet` and installed (set `FREEWALLET_DIR` to use a
-  local checkout instead; `FREEWALLET_REF` pins a branch or tag), then the full
-  Login With Wallet flow runs. This is a local/manual tier, not for CI.
+  the same way, plus a `freewallet` dev server from a local checkout: set
+  `FREEWALLET_DIR` to its path (dependencies are installed on first use), then
+  the full Login With Wallet flow runs. This is a local/manual tier, not for
+  CI.
 
 ## Contribute
 

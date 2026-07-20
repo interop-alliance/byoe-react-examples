@@ -17,7 +17,8 @@
     "test:browser": "pnpm -r --workspace-concurrency=1 run test:browser",
     "test:browser:was": "pnpm --filter byoe-notes-example run test:browser:was",
     "test:browser:wallet": "pnpm --filter byoe-notes-example run test:browser:wallet",
-    "provision:dev": "pnpm --filter byoe-notes-example run provision:dev"
+    "provision:dev": "pnpm --filter byoe-notes-example run provision:dev",
+    "npm:clear": "rm -rf pnpm-lock.yaml node_modules examples/*/node_modules && node -e \"const fs=require('fs');const f='pnpm-workspace.yaml';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/minimumReleaseAgeExclude:\\n(  - .*\\n?)*/,''))\""
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

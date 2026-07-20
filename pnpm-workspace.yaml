@@ -5,5 +5,9 @@ allowBuilds:
   core-js: false
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@interop/was-react@0.1.7 || 0.1.8'
-  - was-teaching-server@0.9.1
+  - '@interop/did-web-resolver@6.3.0'
+  - '@interop/security-document-loader@9.4.4'
+  - '@interop/storage-core@0.3.7'
+  - '@interop/was-client@0.17.0'
+  - '@interop/was-react@0.2.2'
+  - was-teaching-server@0.12.0
