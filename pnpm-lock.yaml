@@ -39,8 +39,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
       '@interop/was-react':
-        specifier: ^0.1.7
-        version: 0.1.7(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
+        specifier: ^0.2.2
+        version: 0.2.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
       '@mui/icons-material':
         specifier: ^9.0.0
         version: 9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
@@ -97,8 +97,8 @@ importers:
         specifier: ^4.1.7
         version: 4.1.10(@types/node@26.1.1)(vite@8.1.5(@types/node@26.1.1)(esbuild@0.28.1)(terser@5.49.0)(tsx@4.23.1)(yaml@2.9.0))
       was-teaching-server:
-        specifier: ^0.9.1
-        version: 0.9.1(react-native@0.86.0(@babel/core@7.29.7)(@types/react@19.2.17)(react@19.2.7))
+        specifier: ^0.12.0
+        version: 0.12.0(react-native@0.86.0(@babel/core@7.29.7)(@types/react@19.2.17)(react@19.2.7))
 
   examples/save-file:
     dependencies:
@@ -109,8 +109,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
       '@interop/was-react':
-        specifier: ^0.1.8
-        version: 0.1.8(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
+        specifier: ^0.2.2
+        version: 0.2.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
       '@mui/icons-material':
         specifier: ^9.0.0
         version: 9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
@@ -622,6 +622,10 @@ packages:
     resolution: {integrity: sha512-5TusTWI4Fuxa3HRtT6vmD/jsAciJ2YZ6/hGjFgkkb9G3LMkdChOYyrlc0okNfu27FsS4WiR4SqXo3UFkJNEI0A==}
     engines: {node: '>=24.0'}
 
+  '@interop/did-web-resolver@6.3.0':
+    resolution: {integrity: sha512-/P+5oxkpEvt4Xrh+BKz15KX/FMRrlcR//SzgBqwqaIeN6MyF2ceXe0AaZYIYDfxNhu5td3zYJ3i2BWFkNbJuAg==}
+    engines: {node: '>=24.0'}
+
   '@interop/ecdsa-multikey@2.3.3':
     resolution: {integrity: sha512-BfLx0xA8YlkZXhF9tYIa0rS/hq5yNmIioSH5GorkTLXbHq7gVkNSWxr4cEw8C7BHAW9j/xMv0gzoEbfoQ8eLig==}
     engines: {node: '>=24.0'}
@@ -653,8 +657,8 @@ packages:
       react-native-get-random-values:
         optional: true
 
-  '@interop/edv-client@17.6.1':
-    resolution: {integrity: sha512-CFEGb5F/tDc0MxE3wMNq+UotcR0f1KsiqeMa1Ppuba56PqCsjsld5vuFDktD/6yTtOrXuXO6vSe9oF8icFE2Yg==}
+  '@interop/edv-client@17.7.0':
+    resolution: {integrity: sha512-g4bVginstVGBmoSkFlFG/SYRTHIvBlNos15psn4RgK0sX8205uBuKxRLmUNDLuTCNRe2wIDYHEO0OB6Bi9n+aw==}
     engines: {node: '>=24.0'}
     peerDependencies:
       react-native-get-random-values: ^2.0.0
@@ -703,16 +707,20 @@ packages:
     resolution: {integrity: sha512-6c8dnoQNIiL25Q4YovC1a44mREO1lzW3F/lmvdwbAMMbhtGGRoQeqo1H4diwNhBzaxRrUMXrAIwbM26POmI/Yg==}
     engines: {node: '>=24.0'}
 
-  '@interop/minimal-cipher@7.6.2':
-    resolution: {integrity: sha512-5O+bP7m1UwkKBNB7UWmFEst0BuYeza3CI2wrZki0Bbdk4CD+8DTuiIvD3vKaszOOe9s0SziP9Drv8pTuahW1Pg==}
+  '@interop/minimal-cipher@7.7.0':
+    resolution: {integrity: sha512-grTbvdh3j0DoHnGluBlKXrVGBnoUTUPh2LPc8AvfeoEVkHQrQXbtmcyJRZ2VGIDyJEkq30xV5rcr+EvmBrrepg==}
     engines: {node: '>=24.0'}
 
   '@interop/security-document-loader@9.4.2':
     resolution: {integrity: sha512-21iK50N42lsaLplPWKWPRtgLie6UDnKp5MXe+xTsnsUC0OuSaTuYGgKG4NGQEibL8pNm+VIn/Bwv5Ua15cTR/A==}
     engines: {node: '>=24.0'}
 
-  '@interop/storage-core@0.3.5':
-    resolution: {integrity: sha512-XOKBvrKwvsZFpi6bCBu/KhwuPeG7s+zreKQO8ecsa0FakFYl2LxhwrrmO7JAWJKL2go07LzfYZvXss/btuxdxA==}
+  '@interop/security-document-loader@9.4.4':
+    resolution: {integrity: sha512-oP6B3Z2L3Ocetabmlfdu1TQVd01FCHGxgKxeD42Kh4EdUPZOJDbihaa0/NH0WXHn/sNeoU/FV7FYDjTVVqX8oQ==}
+    engines: {node: '>=24.0'}
+
+  '@interop/storage-core@0.3.7':
+    resolution: {integrity: sha512-CJROh1jAyrZR/YZRO5iqs0Uq+luhmPpiYd6XCOpCv6NQHHfCgR8FZttbzIhY4TunwcatSS0ZqN5ftU0KiNVPRg==}
     engines: {node: '>=22.0'}
 
   '@interop/vc-bitstring-status-list@3.0.4':
@@ -727,33 +735,13 @@ packages:
     resolution: {integrity: sha512-QvRM/VTVTG+9VpOnEd15Eklt/IwFc+XJHu7e0xJI4jKVwr43qxBwblWPeTvvM5AdfCkmIxzlvIXdnf62vO0ZUg==}
     engines: {node: '>=24.0'}
 
-  '@interop/was-client@0.14.5':
-    resolution: {integrity: sha512-ZJJYsxUD60n+UN3tKb3WeHK/tAionUXk43NkVFfXixOwAVuyASMg3RBZgiv8IzYHWq1n1EacrfN8YSUfFoOSLg==}
+  '@interop/was-client@0.17.0':
+    resolution: {integrity: sha512-67IpKUj/C1jHOL4bvPdqGJ9ZGIo+qMzgH4vRN8/KfxwcFMFKTEOCT0UpJYR6jm/sQQB4IuXrseHoTK9GC+9CQA==}
     engines: {node: '>=24.0'}
 
-  '@interop/was-react@0.1.7':
-    resolution: {integrity: sha512-qUK0A50wupbd3gsb7gKyj+UyW40y5TUqWpQxnipDTnaTafg7sCy9qdGsrtQhpuqbVy9KDB6wAQbyqcEPTLP6Lg==}
+  '@interop/was-react@0.2.2':
+    resolution: {integrity: sha512-lN6wnGszO4e5YUNPxXpPzybUKmMf8ox5yATojv4zGck/MijhDRhgihuChDQaboSoxrvud9jfR4ZK5xgeK7VuNQ==}
     engines: {node: '>=24.0'}
-    hasBin: true
-    peerDependencies:
-      '@mui/icons-material': '>=9.0.0'
-      '@mui/material': '>=9.0.0'
-      react: '>=19'
-      react-router: '>=8.0.0'
-      rxdb: ^17.0.0
-      zustand: ^5.0.0
-    peerDependenciesMeta:
-      '@mui/icons-material':
-        optional: true
-      '@mui/material':
-        optional: true
-      react-router:
-        optional: true
-
-  '@interop/was-react@0.1.8':
-    resolution: {integrity: sha512-2zthhs99oybw9susnplRyc5KjeQBHdfVUZi5yjONZot68ZtQRMINl5LYDrJWj7zo0HJWsyXTMnXiJ2t/IvgMdg==}
-    engines: {node: '>=24.0'}
-    hasBin: true
     peerDependencies:
       '@mui/icons-material': '>=9.0.0'
       '@mui/material': '>=9.0.0'
@@ -1832,11 +1820,11 @@ packages:
   fast-text-encoding@1.0.6:
     resolution: {integrity: sha512-VhXlQgj9ioXCqGstD37E/HBeqEGV/qOD/kmbVG8h5xKBYvM1L3lR1Zn4555cQ8GkYbJa8aJSipLPndE1k6zK2w==}
 
-  fast-uri@3.1.3:
-    resolution: {integrity: sha512-i70LwGWUduXqzicKXWshooq+sWL1K3WUU5rKZNG/0i3a1OSoX3HqhH5WbWwTmqWfor4urUakGPiRQcleRZTwOg==}
+  fast-uri@3.1.4:
+    resolution: {integrity: sha512-8JnbkQ4juDyvYs4mgFGQqg4yCYtFDtUtmp2QIQq11ZZe5CFQ5wcqm1rqDgAh/QdMySuBnPzMUiJUNZG5N/AiQw==}
 
-  fast-uri@4.1.0:
-    resolution: {integrity: sha512-ZodJ2cRiLVWGi9IgPb3mbgSqM4CD3LexCHkuv0FfBXHJI1ADfucTD06m6clO2Cy5RZYsw/SiCVl/dyrFI/SYWA==}
+  fast-uri@4.1.1:
+    resolution: {integrity: sha512-YPOs1zD5TG2+EZt+r88LwF6mclA7TPkpwMP7ZN3TO2HiHS8TXvq7QA/17iJsV9dubcLo/f8eEYqMBruyQV21hQ==}
 
   fastify-plugin@5.1.0:
     resolution: {integrity: sha512-FAIDA8eovSt5qcDgcBvDuX/v0Cjz0ohGhENZ/wpc3y+oZCY2afZ9Baqql3g/lC+OHRnciQol4ww7tuthOb9idw==}
@@ -2621,8 +2609,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  postcss@8.5.19:
-    resolution: {integrity: sha512-Mz8SaolMd8nB+G13WkORcxQKHZ/NE4xXevtkJHVuG+guo9/wYKlIMTKAqGdEmYOXR2ijPjTYNHssizdaVSUNdQ==}
+  postcss@8.5.20:
+    resolution: {integrity: sha512-lW616l85ucIQL+FocMmL7pQFPqBmwejrCMg+iPxyImlrANNJG9NHq/RkyCZopDhd8C3LA03PHRJDjkbGu8vvug==}
     engines: {node: ^10 || ^12 || >=14}
 
   postgres-array@2.0.0:
@@ -3225,8 +3213,8 @@ packages:
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
 
-  was-teaching-server@0.9.1:
-    resolution: {integrity: sha512-gKgZLwsPttBuEIqFHQOUHR6rGj4V2nmPmGCkViBn6TrsjsCBGoTAYgMBmYV506fFx6NqWpW3UI8+Z9hUYl74bA==}
+  was-teaching-server@0.12.0:
+    resolution: {integrity: sha512-5jDxU/337HOYYOFxN2tj1W4V4Q8LJs5gL9iuV957PufUN/AIPz29v6rffsLiTKZEVkRSGyvBxpymPGtSbDLG7w==}
     engines: {node: '>=24.0'}
 
   web-request-rpc@3.0.1:
@@ -3707,7 +3695,7 @@ snapshots:
     dependencies:
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
-      fast-uri: 3.1.3
+      fast-uri: 3.1.4
 
   '@fastify/busboy@3.2.0': {}
 
@@ -3818,6 +3806,16 @@ snapshots:
     transitivePeerDependencies:
       - react-native-get-random-values
 
+  '@interop/did-web-resolver@6.3.0':
+    dependencies:
+      '@interop/bnid': 6.0.2
+      '@interop/data-integrity-core': 8.3.0
+      '@interop/did-io': 4.1.0
+      '@interop/http-client': 1.0.4
+      did-context: 3.1.1
+    transitivePeerDependencies:
+      - react-native-get-random-values
+
   '@interop/ecdsa-multikey@2.3.3':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
@@ -3853,13 +3851,13 @@ snapshots:
       '@noble/hashes': 2.2.0
       '@scure/base': 2.2.0
 
-  '@interop/edv-client@17.6.1':
+  '@interop/edv-client@17.7.0':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
       '@interop/http-client': 1.0.4
       '@interop/http-signature-zcap-invoke': 6.2.4
       '@interop/lru-memoize': 4.0.3
-      '@interop/minimal-cipher': 7.6.2
+      '@interop/minimal-cipher': 7.7.0
       '@noble/hashes': 2.2.0
       '@scure/base': 2.2.0
       canonicalize: 3.0.0
@@ -3925,7 +3923,7 @@ snapshots:
     dependencies:
       lru-cache: 11.5.2
 
-  '@interop/minimal-cipher@7.6.2':
+  '@interop/minimal-cipher@7.7.0':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
       '@interop/ecdsa-multikey': 2.3.3
@@ -3962,7 +3960,34 @@ snapshots:
     transitivePeerDependencies:
       - react-native-get-random-values
 
-  '@interop/storage-core@0.3.5':
+  '@interop/security-document-loader@9.4.4':
+    dependencies:
+      '@digitalbazaar/data-integrity-context': 2.0.1
+      '@digitalbazaar/multikey-context': 2.0.1
+      '@digitalbazaar/vc-bitstring-status-list-context': 1.1.0
+      '@digitalbazaar/vc-status-list-context': 3.1.1
+      '@digitalbazaar/zcap-context': 2.0.1
+      '@digitalcredentials/credentials-v2-context': 1.0.0
+      '@digitalcredentials/open-badges-context': 3.0.0
+      '@interop/data-integrity-core': 8.3.0
+      '@interop/did-io': 4.1.0
+      '@interop/did-method-key': 7.3.4
+      '@interop/did-web-resolver': 6.3.0
+      '@interop/ecdsa-multikey': 2.3.3
+      '@interop/ed25519-verification-key': 8.0.3
+      '@interop/http-client': 1.0.4
+      aes-key-wrapping-2019-context: 1.0.3
+      credentials-context: 2.0.0
+      did-context: 3.1.1
+      ed25519-signature-2020-context: 1.1.0
+      html-entities: 2.6.0
+      jsonld-document-loader: 2.3.0
+      sha256-hmac-key-2019-context: 1.0.3
+      x25519-key-agreement-2020-context: 1.0.0
+    transitivePeerDependencies:
+      - react-native-get-random-values
+
+  '@interop/storage-core@0.3.7':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
 
@@ -4002,15 +4027,15 @@ snapshots:
     transitivePeerDependencies:
       - react-native-get-random-values
 
-  '@interop/was-client@0.14.5(@interop/jsonld-signatures@11.8.3)':
+  '@interop/was-client@0.17.0(@interop/jsonld-signatures@11.8.3)':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
       '@interop/ed25519-signature': 7.1.4(@interop/jsonld-signatures@11.8.3)
-      '@interop/edv-client': 17.6.1
+      '@interop/edv-client': 17.7.0
       '@interop/ezcap': 7.4.1
       '@interop/http-client': 1.0.4
-      '@interop/minimal-cipher': 7.6.2
-      '@interop/storage-core': 0.3.5
+      '@interop/minimal-cipher': 7.7.0
+      '@interop/storage-core': 0.3.7
       '@interop/x25519-key-agreement-key': 5.2.1
       '@scure/base': 2.2.0
     transitivePeerDependencies:
@@ -4018,41 +4043,15 @@ snapshots:
       - expo-crypto
       - react-native-get-random-values
 
-  '@interop/was-react@0.1.7(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))':
+  '@interop/was-react@0.2.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
       '@interop/ed25519-signature': 7.1.4(@interop/jsonld-signatures@11.8.3)
       '@interop/ezcap': 7.4.1
-      '@interop/security-document-loader': 9.4.2
+      '@interop/security-document-loader': 9.4.4
       '@interop/vc': 11.0.5
       '@interop/verifier-core': 3.3.1
-      '@interop/was-client': 0.14.5(@interop/jsonld-signatures@11.8.3)
-      '@interop/webkms-client': 14.7.1
-      '@interop/x25519-key-agreement-key': 5.2.1
-      '@scure/base': 2.2.0
-      credential-handler-polyfill: 4.1.0
-      react: 19.2.7
-      rxdb: 17.4.0(react@19.2.7)(rxjs@7.8.2)
-      uuidv7: 1.2.1
-      zustand: 5.0.14(@types/react@19.2.17)(react@19.2.7)
-    optionalDependencies:
-      '@mui/icons-material': 9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
-      '@mui/material': 9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react-router: 8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-    transitivePeerDependencies:
-      - '@interop/jsonld-signatures'
-      - expo-crypto
-      - react-native-get-random-values
-
-  '@interop/was-react@0.1.8(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))':
-    dependencies:
-      '@interop/data-integrity-core': 8.3.0
-      '@interop/ed25519-signature': 7.1.4(@interop/jsonld-signatures@11.8.3)
-      '@interop/ezcap': 7.4.1
-      '@interop/security-document-loader': 9.4.2
-      '@interop/vc': 11.0.5
-      '@interop/verifier-core': 3.3.1
-      '@interop/was-client': 0.14.5(@interop/jsonld-signatures@11.8.3)
+      '@interop/was-client': 0.17.0(@interop/jsonld-signatures@11.8.3)
       '@interop/webkms-client': 14.7.1
       '@interop/x25519-key-agreement-key': 5.2.1
       '@scure/base': 2.2.0
@@ -4647,7 +4646,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.3
+      fast-uri: 3.1.4
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -5094,7 +5093,7 @@ snapshots:
       '@fastify/merge-json-schemas': 0.2.1
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
-      fast-uri: 4.1.0
+      fast-uri: 4.1.1
       json-schema-ref-resolver: 3.0.0
       rfdc: 1.4.1
 
@@ -5108,9 +5107,9 @@ snapshots:
 
   fast-text-encoding@1.0.6: {}
 
-  fast-uri@3.1.3: {}
+  fast-uri@3.1.4: {}
 
-  fast-uri@4.1.0: {}
+  fast-uri@4.1.1: {}
 
   fastify-plugin@5.1.0: {}
 
@@ -5957,7 +5956,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postcss@8.5.19:
+  postcss@8.5.20:
     dependencies:
       nanoid: 3.3.16
       picocolors: 1.1.1
@@ -6490,7 +6489,7 @@ snapshots:
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.5
-      postcss: 8.5.19
+      postcss: 8.5.20
       rolldown: 1.1.5
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -6534,7 +6533,7 @@ snapshots:
     dependencies:
       makeerror: 1.0.12
 
-  was-teaching-server@0.9.1(react-native@0.86.0(@babel/core@7.29.7)(@types/react@19.2.17)(react@19.2.7)):
+  was-teaching-server@0.12.0(react-native@0.86.0(@babel/core@7.29.7)(@types/react@19.2.17)(react@19.2.7)):
     dependencies:
       '@digitalcredentials/bnid': 5.0.0(react-native@0.86.0(@babel/core@7.29.7)(@types/react@19.2.17)(react@19.2.7))
       '@fastify/cors': 11.3.0
@@ -6550,8 +6549,8 @@ snapshots:
       '@interop/http-signature-zcap-verify': 12.1.2
       '@interop/jsonld-signatures': 11.8.3
       '@interop/lru-memoize': 4.0.3
-      '@interop/security-document-loader': 9.4.2
-      '@interop/storage-core': 0.3.5
+      '@interop/security-document-loader': 9.4.4
+      '@interop/storage-core': 0.3.7
       '@interop/x25519-key-agreement-key': 5.2.1
       '@interop/zcap': 11.0.5
       fastify: 5.10.0

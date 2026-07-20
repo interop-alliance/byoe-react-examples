@@ -42,12 +42,20 @@ export function LoginPage() {
 
   // On click, branch on whether the anonymous replica holds data: if it does,
   // let the user choose what happens to it via the dialog (which runs the
-  // login); otherwise log in directly.
+  // login); otherwise log in directly. `login` resolves `{ firstRun }` on a
+  // connected outcome (the router then navigates to the app), `null` on a
+  // cancelled wallet popup, and rejects on a genuine failure -- whose message
+  // the library mirrors into `error`, rendered as the alert below, so the catch
+  // just keeps the rejection handled.
   async function handleLogin(): Promise<void> {
     if (await hasLocalData()) {
       setAdoptOpen(true)
-    } else {
+      return
+    }
+    try {
       await login()
+    } catch {
+      // Surfaced via the `error` alert.
     }
   }
 

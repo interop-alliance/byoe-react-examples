@@ -45,8 +45,6 @@ export default defineConfig({
     env: {
       VITE_AUTH_MODE: 'dev',
       VITE_WAS_DEV_SYNC: 'true',
-      // Must EXACTLY equal the server's SERVER_URL (zcap invocation targets).
-      VITE_WAS_SERVER_URL: WAS_URL,
       // Snappier backoff + change-feed polling so multi-device convergence
       // and offline/online recovery land within the test timeouts.
       VITE_WAS_SYNC_RETRY_MS: '1500',

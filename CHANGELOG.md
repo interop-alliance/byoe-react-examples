@@ -4,12 +4,12 @@
 
 ### Added
 
-- `examples/save-file` (Space Miner): a minimal single-document example app. The
-  whole model is one save-file document served by the library's new
+- `examples/save-file` (Text Editor): a minimal single-document example app. The
+  whole model is the text in one textbox, served by the library's new
   `useDocument` hook (`defineDocumentApp` in `src/app.config.ts` is the app's
   entire was-react wiring): fully functional local-first with no wallet or
-  server, save download/load as a tagged JSON file, and an optional "Save to Web
-  Spaces" wallet connect that carries the local save into a single granted
+  server, file export/import as a tagged JSON file, and an optional "Save to Web
+  Spaces" wallet connect that carries the local text into a single granted
   sandbox collection. Ships its own offline Playwright suite.
 - The repo is now a pnpm workspace (`.` plus `examples/*`); root `lint`, `fix`,
   and `format` cover the examples.
@@ -53,6 +53,21 @@
 - Dev-sync now drives the library's `connectWithGrants` path (loading the
   provisioned grants, then connecting under the dev seed), exercising the same
   connected-state sync path a wallet login drives.
+
+### Fixed
+
+- Each example now names its own local storage: `dbName` / `storageKeyPrefix`
+  (`byoe-notes` and `text-editor`) instead of the library defaults, so the
+  encrypted replica and the device/seed keys are per-app even when two apps are
+  served from one origin. Notes passes its prefix to `getDeviceId` explicitly,
+  since that function takes it per call rather than reading the app config.
+- Each example's dev server is now pinned to its own port (notes 5173, save-file
+  5174, matching each app's `APP_ORIGIN` and Playwright config) via
+  `server.port` / `strictPort`. Previously neither pinned a port, so whichever
+  example started first took 5173 and the second landed on 5174 -- and running
+  them in either order left two apps sharing one origin, hence one encrypted
+  local replica. The second app then failed to open the first one's database,
+  leaving the session stuck in `boot` and the page stuck on "Loading...".
 
 ### Removed
 

@@ -1,6 +1,6 @@
 /**
  * The app layout: a top bar with the app name, the library's `SyncStatusChip`
- * (offline / syncing / synced / error rollup), and a status-driven control --
+ * (local-only / syncing / synced / error rollup), and a status-driven control --
  * a "Log out" button (opening `LogoutDialog`) when connected, or a "Clear data"
  * button (opening `ClearDataDialog`) in local mode -- with the `ReconnectBanner`
  * (shown when granted access nears expiry) above the routed page content.
@@ -12,9 +12,7 @@ import {
   Box,
   Button,
   Container,
-  IconButton,
   Toolbar,
-  Tooltip,
   Typography
 } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -41,15 +39,13 @@ export function AppShell() {
           </Typography>
           <SyncStatusChip />
           {connected ? (
-            <Tooltip title="Log out">
-              <IconButton
-                color="inherit"
-                aria-label="log out"
-                onClick={() => setLogoutOpen(true)}
-              >
-                <LogoutIcon />
-              </IconButton>
-            </Tooltip>
+            <Button
+              color="inherit"
+              startIcon={<LogoutIcon />}
+              onClick={() => setLogoutOpen(true)}
+            >
+              Log out
+            </Button>
           ) : (
             <Button
               color="inherit"

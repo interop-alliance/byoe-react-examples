@@ -73,10 +73,10 @@ test('persists notes across a page reload (IndexedDB)', async ({ page }) => {
   ).toBeVisible()
 })
 
-test('sync chip advertises local-only (offline) mode', async ({ page }) => {
+test('sync chip advertises local-only mode', async ({ page }) => {
   const chip = page.getByTestId('sync-status-chip')
   await expect(chip).toBeVisible()
-  await expect(chip).toHaveText(/Offline/)
+  await expect(chip).toHaveText(/Local only/)
   await expect(chip).toHaveAttribute('data-sync-state', 'offline')
 })
 

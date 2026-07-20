@@ -1,5 +1,5 @@
 /**
- * Offline Playwright config: serves the game with Vite and exercises it
+ * Offline Playwright config: serves the editor with Vite and exercises it
  * against the encrypted local replica only (a tier-1 app is fully functional
  * with no wallet and no WAS server). Suited to CI.
  *

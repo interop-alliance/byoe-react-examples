@@ -24,11 +24,6 @@ export const APP_ORIGIN = env.VITE_APP_ORIGIN || 'http://localhost:5173'
 export const AUTH_MODE: 'dev' | 'wallet' =
   env.VITE_AUTH_MODE === 'dev' ? 'dev' : 'wallet'
 
-// Remote WAS server URL. In wallet mode this is the expected host of every
-// granted zcap's invocationTarget (grants pointing anywhere else are rejected
-// at login).
-export const WAS_SERVER_URL = env.VITE_WAS_SERVER_URL || 'http://localhost:3002'
-
 // Dev-sync mode (CHAPI bypassed; dev auth mode only): when truthy, the app
 // loads a locally provisioned grants file and replicates to a running
 // was-teaching-server using the dev seed's delegated zcaps. Off by default.
@@ -61,7 +56,6 @@ export const COLLECTIONS: WasCollectionConfig[] = [
 export const appConfig: WasAppConfig = {
   appName: 'BYOE Notes',
   appOrigin: APP_ORIGIN,
-  wasServerUrl: WAS_SERVER_URL,
   // Wallet mode gates the app behind login; dev mode is local-first (a usable
   // anonymous replica with no login gate). Only affects the router's rendering,
   // never the store's transitions.
