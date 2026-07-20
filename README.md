@@ -21,18 +21,30 @@
 
 ## Background
 
-"Bring Your Own Everything" is a way to build web apps with no backend that the
-app owns: the user brings their own identity (a CHAPI wallet) and their own
-storage (a WAS server), and the app keeps everything client-side encrypted in
-that user-owned space -- local-first, synced in the background. The
-[developer guide](docs/guide.md) and the
+BYOE ("Bring Your Own Everything") is a way to build applications and systems
+where the users can bring their own (all optional):
+
+1. **Identity**: typically, [W3C DIDs (Decentralized Identifiers)](https://www.w3.org/TR/did-1.0/),
+  with authentication provided by DID Authentication (using VCALM or OpenID4VP)
+2. **Authorization**: using [Authorization Capabilities (zCaps)](https://w3c-ccg.github.io/zcap-spec/)
+  and pluggable policy languages.
+3. **Storage**: using [Wallet Attached Storage (WAS)](https://w3c-ccg.github.io/was-spec/),
+  which provides offline-first, replicated encrypted permissioned storage.
+4. **Preferences**: these can be requested in the form of Verifiable Credentials
+  from a user's wallet.
+5. **Social Graph**: in the form of an encrypted replicated Contacts collection.
+
+Each of these elements can be added to existing applications, but the purpose
+of this repository is to demonstrate how to bring them all together in a
+single (React) web app.
+
+The [developer guide](docs/guide.md) and the
 [notes example README](examples/notes/README.md) cover the model in depth.
 
 BYOE apps come in tiers of ambition, and the library API is layered to match: an
 app that is just "one document, saved locally, optionally backed up to the
 user's Space" should never see grants parsing or sync internals, while a
-multi-collection interop app gets the full machinery. Each example here is the
-smallest honest app of its tier.
+multi-collection interop app gets the full machinery.
 
 ## The examples
 
@@ -46,7 +58,7 @@ planned once the underlying library support lands.
 
 ## Getting started
 
-Prerequisites: **Node.js >= 24** and **pnpm** (the repo pins `pnpm@11.9.0`).
+Prerequisites: **Node.js >= 24** and **pnpm**.
 
 ```
 pnpm install          # installs every example (pnpm workspace)
@@ -59,12 +71,12 @@ prerequisites.
 
 ## Starting your own app from an example
 
-Copy an example out of the workspace with
-[degit](https://github.com/Rich-Harris/degit) -- each example is a
-self-contained package:
+You can copy an example out of the workspace with
+[`degit`](https://github.com/Rich-Harris/degit) (each example is a
+self-contained package). For example, to just copy the `notes` app:
 
 ```
-pnpm dlx degit interop-alliance/byoe-react-examples/examples/notes my-app
+pnpx degit interop-alliance/byoe-react-examples/examples/notes my-app
 cd my-app && pnpm install
 ```
 
@@ -116,8 +128,7 @@ dependencies and test suites.
 ## Contribute
 
 PRs accepted. Keep app-agnostic logic in `@interop/was-react` rather than
-growing it in the examples; each example should stay the smallest honest app of
-its tier.
+growing it in the examples; each example should stay as simple as possible.
 
 ## License
 
