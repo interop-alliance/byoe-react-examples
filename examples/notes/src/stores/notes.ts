@@ -10,8 +10,8 @@
 import { createEntityStore, type StoreRegistry } from '@interop/was-react'
 
 /**
- * `updatedAt` and `deviceId` are REQUIRED by the sync layer: remote conflicts
- * are resolved last-writer-wins on the payload's own `(updatedAt, deviceId)`,
+ * `updatedAt` and `clientId` are REQUIRED by the sync layer: remote conflicts
+ * are resolved last-writer-wins on the payload's own `(updatedAt, clientId)`,
  * so every insert/update must stamp both (see NotesPage). A payload without
  * them loses every conflict to the server copy.
  */
@@ -20,7 +20,7 @@ export interface Note {
   text: string
   createdAt: string
   updatedAt: string
-  deviceId: string
+  clientId: string
 }
 
 /** Zustand hook holding the decrypted notes as a `Map<uuid, Note>`. */

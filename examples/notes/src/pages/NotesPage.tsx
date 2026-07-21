@@ -19,18 +19,32 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { uuidv7 } from 'uuidv7'
-import { getDeviceId } from '@interop/was-react'
+import { getClientId } from '@interop/was-react'
 import { useNotes, type Note } from '@/stores/notes'
 
-/** This app's device id, under the library's default localStorage key. */
-const deviceId = () => getDeviceId()
+/**
+ * This installation's client id, under the library's default localStorage key.
+ */
+const clientId = () => getClientId()
 
+/**
+ * One note in the list: display mode (text + created date, edit/delete icons)
+ * or, after the edit icon, an inline edit mode (textbox + Save/Cancel). Each
+ * row owns its editing state, so editing one note never re-renders the rest of
+ * the list.
+ */
 function NoteRow({ note }: { note: Note }) {
   const update = useNotes(state => state.update)
   const remove = useNotes(state => state.remove)
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(note.text)
 
+  /**
+   * Commit the edit: persist the trimmed draft with fresh LWW stamps
+   * (`updatedAt` + `clientId` -- without them the write loses every sync
+   * conflict, see the Note type) and leave edit mode. An empty or unchanged
+   * draft just closes the editor without writing.
+   */
   async function save() {
     const text = draft.trim()
     if (text && text !== note.text) {
@@ -38,7 +52,7 @@ function NoteRow({ note }: { note: Note }) {
         ...note,
         text,
         updatedAt: new Date().toISOString(),
-        deviceId: deviceId()
+        clientId: clientId()
       })
     }
     setEditing(false)
@@ -105,15 +119,29 @@ function NoteRow({ note }: { note: Note }) {
   )
 }
 
+/**
+ * The notes list page: an add-note textbox on top, then the notes newest
+ * first. Reads subscribe to the entity store's `byId` Map, so a change from
+ * anywhere -- this page, a background sync from another client, logout's clear
+ * -- re-renders the list; writes go through the store verbs, which persist to
+ * the encrypted replica first and replicate in the background when connected.
+ */
 export function NotesPage() {
   const notes = useNotes(state => state.byId)
   const insert = useNotes(state => state.insert)
   const [text, setText] = useState('')
 
+  // Newest-first without mutating the store's Map. uuidv7 ids would also sort
+  // by creation time, but sorting on `createdAt` keeps the intent readable.
   const sorted = [...notes.values()].sort((a, b) =>
     b.createdAt.localeCompare(a.createdAt)
   )
 
+  /**
+   * Insert the typed note (ignoring a blank textbox) under a fresh uuidv7 id
+   * with the LWW stamps the sync layer requires, then clear the textbox for
+   * the next one.
+   */
   async function addNote() {
     const trimmed = text.trim()
     if (!trimmed) {
@@ -125,7 +153,7 @@ export function NotesPage() {
       text: trimmed,
       createdAt: now,
       updatedAt: now,
-      deviceId: deviceId()
+      clientId: clientId()
     })
     setText('')
   }

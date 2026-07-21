@@ -39,8 +39,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
       '@interop/was-react':
-        specifier: ^0.2.2
-        version: 0.2.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
+        specifier: ^0.3.2
+        version: 0.3.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
       '@mui/icons-material':
         specifier: ^9.0.0
         version: 9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
@@ -109,8 +109,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
       '@interop/was-react':
-        specifier: ^0.2.2
-        version: 0.2.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
+        specifier: ^0.3.2
+        version: 0.3.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))
       '@mui/icons-material':
         specifier: ^9.0.0
         version: 9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
@@ -618,10 +618,6 @@ packages:
     resolution: {integrity: sha512-ejMNiUVZphaYyic1XCGw1JixPKZ6wj3nBDc+wDPVhiUHCuOduEq9+38+QWqw3nrRDyyilKiInLPTl0u9FlUwOg==}
     engines: {node: '>=24.0'}
 
-  '@interop/did-web-resolver@6.2.4':
-    resolution: {integrity: sha512-5TusTWI4Fuxa3HRtT6vmD/jsAciJ2YZ6/hGjFgkkb9G3LMkdChOYyrlc0okNfu27FsS4WiR4SqXo3UFkJNEI0A==}
-    engines: {node: '>=24.0'}
-
   '@interop/did-web-resolver@6.3.0':
     resolution: {integrity: sha512-/P+5oxkpEvt4Xrh+BKz15KX/FMRrlcR//SzgBqwqaIeN6MyF2ceXe0AaZYIYDfxNhu5td3zYJ3i2BWFkNbJuAg==}
     engines: {node: '>=24.0'}
@@ -711,10 +707,6 @@ packages:
     resolution: {integrity: sha512-grTbvdh3j0DoHnGluBlKXrVGBnoUTUPh2LPc8AvfeoEVkHQrQXbtmcyJRZ2VGIDyJEkq30xV5rcr+EvmBrrepg==}
     engines: {node: '>=24.0'}
 
-  '@interop/security-document-loader@9.4.2':
-    resolution: {integrity: sha512-21iK50N42lsaLplPWKWPRtgLie6UDnKp5MXe+xTsnsUC0OuSaTuYGgKG4NGQEibL8pNm+VIn/Bwv5Ua15cTR/A==}
-    engines: {node: '>=24.0'}
-
   '@interop/security-document-loader@9.4.4':
     resolution: {integrity: sha512-oP6B3Z2L3Ocetabmlfdu1TQVd01FCHGxgKxeD42Kh4EdUPZOJDbihaa0/NH0WXHn/sNeoU/FV7FYDjTVVqX8oQ==}
     engines: {node: '>=24.0'}
@@ -739,8 +731,8 @@ packages:
     resolution: {integrity: sha512-67IpKUj/C1jHOL4bvPdqGJ9ZGIo+qMzgH4vRN8/KfxwcFMFKTEOCT0UpJYR6jm/sQQB4IuXrseHoTK9GC+9CQA==}
     engines: {node: '>=24.0'}
 
-  '@interop/was-react@0.2.2':
-    resolution: {integrity: sha512-lN6wnGszO4e5YUNPxXpPzybUKmMf8ox5yATojv4zGck/MijhDRhgihuChDQaboSoxrvud9jfR4ZK5xgeK7VuNQ==}
+  '@interop/was-react@0.3.2':
+    resolution: {integrity: sha512-Vd4I+IcWWWjzQ2/dAJyWgl4gNOXLgdI+LHo1mY6QXQCbamADW3+Mu/eBil9dA8taa2K8zpPSDhB6XKk5xbbEZA==}
     engines: {node: '>=24.0'}
     peerDependencies:
       '@mui/icons-material': '>=9.0.0'
@@ -3796,16 +3788,6 @@ snapshots:
     transitivePeerDependencies:
       - react-native-get-random-values
 
-  '@interop/did-web-resolver@6.2.4':
-    dependencies:
-      '@interop/bnid': 6.0.2
-      '@interop/data-integrity-core': 8.3.0
-      '@interop/did-io': 4.1.0
-      '@interop/http-client': 1.0.4
-      did-context: 3.1.1
-    transitivePeerDependencies:
-      - react-native-get-random-values
-
   '@interop/did-web-resolver@6.3.0':
     dependencies:
       '@interop/bnid': 6.0.2
@@ -3933,33 +3915,6 @@ snapshots:
       '@stablelib/chacha': 2.0.1
       '@stablelib/chacha20poly1305': 2.0.1
 
-  '@interop/security-document-loader@9.4.2':
-    dependencies:
-      '@digitalbazaar/data-integrity-context': 2.0.1
-      '@digitalbazaar/multikey-context': 2.0.1
-      '@digitalbazaar/vc-bitstring-status-list-context': 1.1.0
-      '@digitalbazaar/vc-status-list-context': 3.1.1
-      '@digitalbazaar/zcap-context': 2.0.1
-      '@digitalcredentials/credentials-v2-context': 1.0.0
-      '@digitalcredentials/open-badges-context': 3.0.0
-      '@interop/data-integrity-core': 8.3.0
-      '@interop/did-io': 4.1.0
-      '@interop/did-method-key': 7.3.4
-      '@interop/did-web-resolver': 6.2.4
-      '@interop/ecdsa-multikey': 2.3.3
-      '@interop/ed25519-verification-key': 8.0.3
-      '@interop/http-client': 1.0.4
-      aes-key-wrapping-2019-context: 1.0.3
-      credentials-context: 2.0.0
-      did-context: 3.1.1
-      ed25519-signature-2020-context: 1.1.0
-      html-entities: 2.6.0
-      jsonld-document-loader: 2.3.0
-      sha256-hmac-key-2019-context: 1.0.3
-      x25519-key-agreement-2020-context: 1.0.0
-    transitivePeerDependencies:
-      - react-native-get-random-values
-
   '@interop/security-document-loader@9.4.4':
     dependencies:
       '@digitalbazaar/data-integrity-context': 2.0.1
@@ -4012,12 +3967,12 @@ snapshots:
       '@interop/data-integrity-proof': 3.4.2
       '@interop/did-io': 4.1.0
       '@interop/did-method-key': 7.3.4
-      '@interop/did-web-resolver': 6.2.4
+      '@interop/did-web-resolver': 6.3.0
       '@interop/ecdsa-signature': 2.0.5(@interop/jsonld-signatures@11.8.3)
       '@interop/ed25519-signature': 7.1.4(@interop/jsonld-signatures@11.8.3)
       '@interop/ed25519-verification-key': 8.0.3
       '@interop/jsonld-signatures': 11.8.3
-      '@interop/security-document-loader': 9.4.2
+      '@interop/security-document-loader': 9.4.4
       '@interop/vc': 11.0.5
       '@interop/vc-bitstring-status-list': 3.0.4
       ajv: 8.20.0
@@ -4043,7 +3998,7 @@ snapshots:
       - expo-crypto
       - react-native-get-random-values
 
-  '@interop/was-react@0.2.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))':
+  '@interop/was-react@0.3.2(@interop/jsonld-signatures@11.8.3)(@mui/icons-material@9.2.0(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@mui/material@9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)(rxdb@17.4.0(react@19.2.7)(rxjs@7.8.2))(zustand@5.0.14(@types/react@19.2.17)(react@19.2.7))':
     dependencies:
       '@interop/data-integrity-core': 8.3.0
       '@interop/ed25519-signature': 7.1.4(@interop/jsonld-signatures@11.8.3)

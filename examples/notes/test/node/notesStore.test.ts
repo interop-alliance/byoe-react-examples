@@ -36,7 +36,7 @@ function makeNote(text: string): Note {
     text,
     createdAt: now,
     updatedAt: now,
-    deviceId: 'test-device'
+    clientId: 'test-device'
   }
 }
 

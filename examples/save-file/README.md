@@ -1,7 +1,7 @@
 # Text Editor (single-document BYOE example)
 
 The smallest useful shape of a BYOE app: the whole model is **one document**
-(the text in a single textbox), served by `useDocument` from
+(the text in a single textbox), served by `useAppDocument` from
 `@interop/was-react`. The app is fully functional with no wallet and no server
 -- the text lives in an encrypted local replica in the browser -- and grows
 capabilities from there:

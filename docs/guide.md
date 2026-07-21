@@ -22,7 +22,7 @@ tiers, each a superset of the one below:
 
 | Tier | Shape                                                                          | Example app                               | Library entry point                  |
 | ---- | ------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------------ |
-| 1    | One app-private document, key-value read/write                                 | A text editor; an Excalidraw-style canvas | `defineDocumentApp` / `useDocument`  |
+| 1    | One app-private document, key-value read/write                                 | A text editor; an Excalidraw-style canvas | `defineDocumentApp` / `useAppDocument`  |
 | 2    | Read/write CRUD on one or two well-known interop collections                   | A contacts manager; a notes app           | `createEntityStore` + `WasAppConfig` |
 | 3    | Several well-known and app-specific collections, encrypted and public-readable | A microblogging client                    | (planned)                            |
 
@@ -82,7 +82,7 @@ export interface TextDocument {
   text: string
 }
 
-export const { config, registry, useDocument } =
+export const { config, registry, useAppDocument } =
   defineDocumentApp<TextDocument>({
     appName: 'Text Editor',
     appOrigin: APP_ORIGIN,
@@ -104,7 +104,7 @@ export const { config, registry, useDocument } =
 
 ```ts
 const { doc, update, status, exportFile, importFile, connect, disconnect } =
-  useDocument()
+  useAppDocument()
 ```
 
 - `doc` is the current document (`TextDocument`), falling back to
@@ -132,13 +132,13 @@ Diff the two examples and every difference is one of these five moves:
    to a WAS collection `id`. Interop lives in those ids: `notes` is deliberately
    generic, shared by any app that speaks "notes," where tier 1's
    `text-editor-document` was deliberately app-private.
-2. **`useDocument` becomes entity stores.** Each collection gets a
+2. **`useAppDocument` becomes entity stores.** Each collection gets a
    `createEntityStore<T>(key)` (a zustand `Map<uuid, T>` hydrated from the
    encrypted replica) and a `StoreRegistry` entry wiring its `hydrate` /
    `upsert` / `drop` / `clear` handlers, so login, remote sync, and logout can
    drive it.
-3. **LWW stamping becomes your job.** The `useDocument` facade stamped
-   `updatedAt` / `deviceId` for you; entity payloads must carry them explicitly
+3. **LWW stamping becomes your job.** The `useAppDocument` facade stamped
+   `updatedAt` / `clientId` for you; entity payloads must carry them explicitly
    (see [Data rules](#data-rules-that-apply-everywhere)).
 4. **`connect()` becomes a login page.** With `onboarding: 'login-gated'`, the
    library's `ProtectedRoute` gates the app and your login page drives
@@ -184,11 +184,11 @@ for turning the example into your own app.
 
 ## Data rules that apply everywhere
 
-- **Every entity payload carries `updatedAt` (ISO timestamp) and `deviceId`.**
+- **Every entity payload carries `updatedAt` (ISO timestamp) and `clientId`.**
   Sync resolves conflicts last-writer-wins on that pair; a payload missing them
-  loses every conflict. The `useDocument` facade stamps them for you;
+  loses every conflict. The `useAppDocument` facade stamps them for you;
   entity-store apps stamp them on every insert and update (get the device id
-  from the library's `getDeviceId()`).
+  from the library's `getClientId()`).
 - **Collection ids are the interop surface.** Use a generic, unprefixed id
   (`notes`, `contacts`) when you intend other apps to read the same data; use an
   app-named id (`text-editor-document`) for app-private sandbox data. The two

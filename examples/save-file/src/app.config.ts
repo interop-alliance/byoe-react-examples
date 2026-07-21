@@ -2,7 +2,7 @@
  * The whole was-react wiring of a tier-1 app: `defineDocumentApp` takes the
  * app identity plus the one sandbox document (its WAS collection id and its
  * initial value) and returns the config + registry for `WasSessionProvider`
- * and the typed `useDocument` hook the components consume. No entity stores,
+ * and the typed `useAppDocument` hook the components consume. No entity stores,
  * grants, or sync internals appear anywhere in this app.
  */
 import { defineDocumentApp } from '@interop/was-react'
@@ -21,7 +21,7 @@ export const APP_ORIGIN = env.VITE_APP_ORIGIN || 'http://localhost:5174'
 // persists like any other; Clear Data restores it with the fresh document.
 const INITIAL_TEXT = `Welcome to the Text Editor example app.
 
-Everything you type here is saved automatically to encrypted storage on this device. Edit this text, reload the page, and it is still here -- no account needed.
+Everything you type here is encrypted and automatically saved to this browser's IndexedDB storage. Edit this text, reload the page, and it is still here -- no account needed.
 
 To keep a copy, use "Export (Download) File" and bring it back later with "Import (Load) File". Or click "Save to Web Spaces" to connect your wallet and sync this document to your own Web Space.
 
@@ -32,7 +32,7 @@ export interface TextDocument {
   text: string
 }
 
-export const { config, registry, useDocument } =
+export const { config, registry, useAppDocument } =
   defineDocumentApp<TextDocument>({
     appName: 'Text Editor',
     appOrigin: APP_ORIGIN,

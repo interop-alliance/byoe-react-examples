@@ -11,6 +11,7 @@ import {
   AppBar,
   Box,
   Button,
+  Chip,
   Container,
   Toolbar,
   Typography
@@ -23,7 +24,15 @@ import {
   ReconnectBanner,
   SyncStatusChip
 } from '@interop/was-react/mui'
+import { SyncErrorDiagnostics } from './SyncErrorDiagnostics'
 
+/**
+ * The layout route wrapper: renders the chrome around the routed page
+ * (`Outlet`). The top-bar control is status-driven -- connected (including the
+ * `reconnect` warning state) offers "Log out", local mode offers "Clear data"
+ * -- and both dialogs stay mounted so the library owns their behavior; this
+ * component only opens them.
+ */
 export function AppShell() {
   const { status } = useSession()
   const [logoutOpen, setLogoutOpen] = useState(false)
@@ -37,6 +46,14 @@ export function AppShell() {
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
             BYOE Notes
           </Typography>
+          {status === 'connected' && (
+            <Chip
+              label="CONNECTED to storage"
+              color="success"
+              size="small"
+              data-testid="connected-chip"
+            />
+          )}
           <SyncStatusChip />
           {connected ? (
             <Button
@@ -57,6 +74,7 @@ export function AppShell() {
           )}
         </Toolbar>
       </AppBar>
+      <SyncErrorDiagnostics />
       <ReconnectBanner />
       <Container maxWidth="sm" sx={{ py: 4 }}>
         <Outlet />

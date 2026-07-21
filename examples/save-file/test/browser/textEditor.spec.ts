@@ -14,7 +14,7 @@ import { test, expect, type Page } from '@playwright/test'
 // was-react module graph into the test runner). Must match `INITIAL_TEXT`.
 const WELCOME_TEXT = `Welcome to the Text Editor example app.
 
-Everything you type here is saved automatically to encrypted storage on this device. Edit this text, reload the page, and it is still here -- no account needed.
+Everything you type here is encrypted and automatically saved to this browser's IndexedDB storage. Edit this text, reload the page, and it is still here -- no account needed.
 
 To keep a copy, use "Export (Download) File" and bring it back later with "Import (Load) File". Or click "Save to Web Spaces" to connect your wallet and sync this document to your own Web Space.
 

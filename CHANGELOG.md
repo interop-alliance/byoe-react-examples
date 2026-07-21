@@ -6,7 +6,7 @@
 
 - `examples/save-file` (Text Editor): a minimal single-document example app. The
   whole model is the text in one textbox, served by the library's new
-  `useDocument` hook (`defineDocumentApp` in `src/app.config.ts` is the app's
+  `useAppDocument` hook (`defineDocumentApp` in `src/app.config.ts` is the app's
   entire was-react wiring): fully functional local-first with no wallet or
   server, file export/import as a tagged JSON file, and an optional "Save to Web
   Spaces" wallet connect that carries the local text into a single granted
@@ -16,6 +16,11 @@
 - `docs/guide.md`: the developer guide, walking the example tiers (what a tier-1
   single-document app looks like, what changes growing into tier 2, the shared
   session lifecycle, data rules, and the test-tier pattern).
+- Both examples: a "CONNECTED to storage" chip next to the sync status chip
+  while the session is connected, and a `SyncErrorDiagnostics` section (top
+  center) while replication is in the error state, listing the likely reasons
+  the remote WAS server stopped answering (server unreachable, access grant
+  expired, or access grant revoked on the wallet side).
 
 - Adoption on login: when the anonymous local replica holds data, the login page
   now offers the library's `AdoptDialog` -- bring the data into the connected
@@ -59,7 +64,7 @@
 - Each example now names its own local storage: `dbName` / `storageKeyPrefix`
   (`byoe-notes` and `text-editor`) instead of the library defaults, so the
   encrypted replica and the device/seed keys are per-app even when two apps are
-  served from one origin. Notes passes its prefix to `getDeviceId` explicitly,
+  served from one origin. Notes passes its prefix to `getClientId` explicitly,
   since that function takes it per call rather than reading the app config.
 - Each example's dev server is now pinned to its own port (notes 5173, save-file
   5174, matching each app's `APP_ORIGIN` and Playwright config) via

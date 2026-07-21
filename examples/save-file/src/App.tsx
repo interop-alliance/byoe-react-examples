@@ -1,6 +1,6 @@
 /**
  * Text Editor: the whole app in one component file. Everything the app knows
- * about storage, identity, and sync arrives through the `useDocument` hook --
+ * about storage, identity, and sync arrives through the `useAppDocument` hook --
  * type into the one textbox and the text persists in the encrypted local
  * replica. "Export (Download) File" / "Import (Load) File" move the document as
  * a plain JSON file; "Save to Web Spaces" runs the CHAPI wallet login (a single
@@ -33,7 +33,8 @@ import {
   ReconnectBanner,
   SyncStatusChip
 } from '@interop/was-react/mui'
-import { useDocument } from '@/app.config'
+import { useAppDocument } from '@/app.config'
+import { SyncErrorDiagnostics } from './SyncErrorDiagnostics'
 
 /**
  * How long typing pauses before the document is persisted. A text editor writes
@@ -42,6 +43,12 @@ import { useDocument } from '@/app.config'
  */
 const SAVE_DELAY_MS = 400
 
+/**
+ * The single page of the app: a textbox wired to the encrypted document, the
+ * export/import file buttons, and the optional "Save to Web Spaces" wallet
+ * connect. All persistence flows through `useAppDocument`; this component only
+ * translates UI events into calls on it and renders what comes back.
+ */
 export function App() {
   const {
     doc,
@@ -52,7 +59,7 @@ export function App() {
     connect,
     connecting,
     error
-  } = useDocument()
+  } = useAppDocument()
   const [logoutOpen, setLogoutOpen] = useState(false)
   const [clearOpen, setClearOpen] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
@@ -65,6 +72,14 @@ export function App() {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const connected = status === 'connected' || status === 'reconnect'
 
+  /**
+   * Mirror document changes into the textbox -- but only ones that did not
+   * originate here. When `doc.text` differs from `ownText`, the new text came
+   * from outside this editor (initial load, file import, clear data, or a sync
+   * from another device) and the textbox must be updated to show it. When they
+   * match, the change is just our own debounced write echoing back, and
+   * touching `text` would clobber whatever the user has typed since.
+   */
   useEffect(() => {
     if (doc !== undefined && doc.text !== ownText.current) {
       ownText.current = doc.text
@@ -72,6 +87,10 @@ export function App() {
     }
   }, [doc])
 
+  /**
+   * Cancel a pending debounced save when the component unmounts, so the timer
+   * does not fire against an unmounted editor.
+   */
   useEffect(
     () => () => {
       if (saveTimer.current !== null) {
@@ -81,6 +100,12 @@ export function App() {
     []
   )
 
+  /**
+   * Handle a keystroke: show the new text immediately, remember it as our own
+   * (see `ownText` above), and (re)start the save debounce. Only after
+   * `SAVE_DELAY_MS` of quiet does `update` actually write to the encrypted
+   * replica -- and push to the Web Space, once connected.
+   */
   function edit(value: string) {
     setText(value)
     ownText.current = value
@@ -92,6 +117,12 @@ export function App() {
     }, SAVE_DELAY_MS)
   }
 
+  /**
+   * "Export (Download) File": ask the library for the document as a JSON blob,
+   * then trigger a browser download of it via a temporary object URL and a
+   * synthetic click on an invisible anchor (the standard SPA download idiom --
+   * no server involved).
+   */
   async function downloadFile() {
     const blob = await exportFile()
     const url = URL.createObjectURL(blob)
@@ -102,10 +133,14 @@ export function App() {
     URL.revokeObjectURL(url)
   }
 
-  // "Save to Web Spaces": connect resolves `{ firstRun }` on success, `null`
-  // when the user cancels the wallet popup (nothing to do), and rejects on a
-  // genuine failure -- whose message the library also mirrors into `error`,
-  // rendered as the alert below, so the catch just keeps the rejection handled.
+  /**
+   * "Save to Web Spaces": run the CHAPI wallet login and carry the local text
+   * into the granted collection. `connect` resolves `{ firstRun }` on success,
+   * `null` when the user cancels the wallet popup (nothing to do), and rejects
+   * on a genuine failure -- whose message the library also mirrors into
+   * `error`, rendered as the alert below, so the catch just keeps the
+   * rejection handled.
+   */
   async function saveToWebSpaces() {
     try {
       const result = await connect()
@@ -121,6 +156,12 @@ export function App() {
     }
   }
 
+  /**
+   * "Import (Load) File": replace the current document with the contents of a
+   * previously exported JSON file. `importFile` validates the file and writes
+   * it to the replica; the effect above then refreshes the textbox. A bad file
+   * (wrong shape, not JSON) rejects, and the message is shown in the snackbar.
+   */
   async function loadFile(file: File | undefined) {
     if (!file) {
       return
@@ -152,6 +193,7 @@ export function App() {
           )}
         </Toolbar>
       </AppBar>
+      <SyncErrorDiagnostics />
       <ReconnectBanner />
       <Container maxWidth="sm" sx={{ py: 4 }}>
         {doc === undefined ? (
@@ -205,7 +247,7 @@ export function App() {
                 Alternatively, persist the text to Web Spaces via your wallet
               </Typography>
               <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                {connected && (
+                {status === 'connected' && (
                   <Chip
                     label="CONNECTED to storage"
                     color="success"
