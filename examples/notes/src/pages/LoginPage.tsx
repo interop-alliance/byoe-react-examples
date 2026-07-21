@@ -23,13 +23,21 @@ import WalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import { useHasLocalData, useLogin } from '@interop/was-react'
 import { AdoptDialog } from '@interop/was-react/mui'
 
+/**
+ * Human-readable copy per `useLogin` phase; an unknown phase falls back to the
+ * raw phase key in the render below.
+ */
 const PHASE_LABELS: Record<string, string> = {
-  probing: 'Contacting your wallet...',
-  'storing-key': 'Storing your app key in the wallet...',
-  'requesting-grants': 'Requesting storage access...',
+  connecting: 'Contacting your wallet...',
   verifying: 'Verifying the wallet response...'
 }
 
+/**
+ * The login screen: one card with the "Login with wallet" button, the
+ * in-flight phase line, and the error alert. Renders only while not
+ * connected -- a connected visitor (including one whose login just resolved)
+ * is redirected to the app by the `Navigate` below.
+ */
 export function LoginPage() {
   const { login, authenticating, status, phase, error } = useLogin()
   const hasLocalData = useHasLocalData()
@@ -40,13 +48,15 @@ export function LoginPage() {
     return <Navigate to="/" replace />
   }
 
-  // On click, branch on whether the anonymous replica holds data: if it does,
-  // let the user choose what happens to it via the dialog (which runs the
-  // login); otherwise log in directly. `login` resolves `{ firstRun }` on a
-  // connected outcome (the router then navigates to the app), `null` on a
-  // cancelled wallet popup, and rejects on a genuine failure -- whose message
-  // the library mirrors into `error`, rendered as the alert below, so the catch
-  // just keeps the rejection handled.
+  /**
+   * On click, branch on whether the anonymous replica holds data: if it does,
+   * let the user choose what happens to it via the dialog (which runs the
+   * login); otherwise log in directly. `login` resolves `{ firstRun }` on a
+   * connected outcome (the router then navigates to the app), `null` on a
+   * cancelled wallet popup, and rejects on a genuine failure -- whose message
+   * the library mirrors into `error`, rendered as the alert below, so the
+   * catch just keeps the rejection handled.
+   */
   async function handleLogin(): Promise<void> {
     if (await hasLocalData()) {
       setAdoptOpen(true)

@@ -40,6 +40,12 @@ function DevConnect() {
   return null
 }
 
+/**
+ * The route table under the HashRouter: `/login` outside the gate, and the
+ * notes page behind `ProtectedRoute` inside the `AppShell` layout. `DevConnect`
+ * mounts only when dev-connect is on, beside (not inside) the router, since it
+ * renders nothing and only drives the session store.
+ */
 export function App() {
   return (
     <>

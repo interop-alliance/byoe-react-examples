@@ -53,7 +53,7 @@ multi-collection interop app gets the full machinery.
 
 | Tier | Example                                                    | Shape                                   | What it demonstrates                                                                                                                  |
 | ---- | ---------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | [`examples/save-file`](examples/save-file) ("Text Editor") | One app-private document                | `useDocument`: local-first with no login, file export/import, optional "Save to Web Spaces" wallet connect that adopts the local data |
+| 1    | [`examples/save-file`](examples/save-file) ("Text Editor") | One app-private document                | `useAppDocument`: local-first with no login, file export/import, optional "Save to Web Spaces" wallet connect that adopts the local data |
 | 2    | [`examples/notes`](examples/notes) ("BYOE Notes")          | CRUD on a well-known interop collection | `createEntityStore` + entity registry, CHAPI wallet login, adoption of pre-login data, background sync, reconnect handling            |
 
 A tier-3 example (multi-collection interop with public-readable collections) is
@@ -118,7 +118,7 @@ and the wallet tier fetches freewallet on first run -- see the
 
 ```
 examples/
-  save-file/   # tier 1: useDocument, local-first, optional connect
+  save-file/   # tier 1: useAppDocument, local-first, optional connect
   notes/       # tier 2: wallet login + collection CRUD (the original template)
 docs/
   guide.md     # the developer guide, walking the examples

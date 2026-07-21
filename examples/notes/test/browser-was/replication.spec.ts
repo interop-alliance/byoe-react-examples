@@ -116,7 +116,7 @@ test('an edit replicates to a second fresh profile', async ({ browser }) => {
   await expectSynced(a)
 
   // Edit in place. The push is a conditional overwrite of the same envelope;
-  // a version-skew 412 is resolved by the payload LWW (updatedAt, deviceId)
+  // a version-skew 412 is resolved by the payload LWW (updatedAt, clientId)
   // and re-pushed, so the new text must land server-side.
   await editNote(a, original, edited)
   await expect(noteRow(a, edited)).toBeVisible()

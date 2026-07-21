@@ -195,8 +195,8 @@ Then, to turn "BYOE Notes" into your own app:
    Then build a page against your store's `insert` / `update` / `remove` verbs,
    modeled on `src/pages/NotesPage.tsx`, and route to it in `src/App.tsx`.
 
-   Every entity payload MUST carry `updatedAt` (ISO timestamp) and `deviceId`
-   (from the library's `getDeviceId()`), stamped on every insert and update:
+   Every entity payload MUST carry `updatedAt` (ISO timestamp) and `clientId`
+   (from the library's `getClientId()`), stamped on every insert and update:
    remote conflicts are resolved last-writer-wins on that pair, and a payload
    without them loses every conflict to the server copy.
 
