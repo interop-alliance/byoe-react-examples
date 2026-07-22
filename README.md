@@ -133,6 +133,10 @@ dependencies and test suites.
 PRs accepted. Keep app-agnostic logic in `@interop/was-react` rather than
 growing it in the examples; each example should stay as simple as possible.
 
+See: [ARCHITECTURE.md](ARCHITECTURE.md) -- the workspace layout and per-example
+module map; [CONTRIBUTING.md](CONTRIBUTING.md) -- code style and formatting
+conventions.
+
 ## License
 
 [MIT License](LICENSE.md) (c) 2026 Interop Alliance.
