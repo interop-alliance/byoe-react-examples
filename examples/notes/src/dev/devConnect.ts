@@ -49,10 +49,15 @@ export async function runDevConnect(store: WasAuthStore): Promise<void> {
   if (started) {
     return
   }
+  // Claim the guard BEFORE the first await: the driving effect can fire twice
+  // (dev-mode double effects), and both calls would pass a guard set after the
+  // grants fetch. Released on the no-grants path so a later provisioned run
+  // still connects.
+  started = true
   const grants = await loadDevGrants()
   if (!grants) {
+    started = false
     return
   }
-  started = true
   await store.getState().connectWithGrants({ seed: DEV_SEED, grants })
 }

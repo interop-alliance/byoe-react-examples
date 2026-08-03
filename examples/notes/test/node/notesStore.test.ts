@@ -12,6 +12,7 @@ import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import {
   clearLocalStore,
+  deriveIdentity,
   hasStore,
   LocalStore,
   setLocalStore
@@ -41,8 +42,15 @@ function makeNote(text: string): Note {
 }
 
 async function openStore(name: string): Promise<LocalStore> {
+  // Every private collection is encrypted to the app's identity KAK, derived
+  // once from the seed, so the store takes the key material rather than the
+  // seed itself.
+  const { keyAgreementKey, keyResolver } = await deriveIdentity({
+    seed: DEV_SEED
+  })
   const opened = await LocalStore.init({
-    seed: DEV_SEED,
+    keyAgreementKey,
+    keyResolver,
     collections: COLLECTIONS,
     dbName: name
   })

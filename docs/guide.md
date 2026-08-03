@@ -194,6 +194,26 @@ for turning the example into your own app.
   app-named id (`text-editor-document`) for app-private sandbox data. The two
   examples show both: notes asks for the shared `notes` id, the editor keeps its
   document to itself.
+- **A shared id is not shared access.** Two apps asking for the same collection
+  id get capabilities on the same collection, but each app's own collections are
+  encrypted to that app's identity key, so a matching id alone yields
+  ciphertext. Reading a collection you do not own is a separate, explicit grant:
+  declare it in `WasAppConfig.sharedCollections` (`{ key, id }`), which adds a
+  `https://w3id.org/byoe#shared-collection` descriptor with the read-only `GET`/`HEAD` action
+  set to the login request. Approving it fuses two axes in one consent -- a
+  read-only capability on the collection AND an entry in its key-epoch roster --
+  and the app reads through a `SharedCollectionReader` (`useSharedCollection(key)`),
+  never through replication: shared collections are read-only, never written, and
+  have no local replica. The recipient key is **derived, never transmitted**: it
+  is the X25519 twin of the app's `did:key` controller, which the wallet computes
+  from the controller DID alone, so no key material touches the wire and no
+  request can pair one app's DID with another's key. A wallet that predates the
+  descriptor type reports the request unsatisfiable and the login fails closed --
+  deliberately, since a capability without the roster entry would deliver
+  ciphertext that looks like corrupt data. Two honest limits, the same ones the
+  wallet's consent screen states: removing access stops future reads but cannot
+  take back what was already read, and resources written before the collection's
+  first share are sealed to the owner alone and will not decrypt for the grantee.
 - **Local storage names are the opposite of the interop surface.** `dbName` and
   `storageKeyPrefix` name the encrypted replica and the device/seed keys in
   *this browser*, so give every app its own. Left at the library defaults, two
