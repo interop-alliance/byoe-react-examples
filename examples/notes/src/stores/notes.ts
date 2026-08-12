@@ -10,10 +10,11 @@
 import { createEntityStore, type StoreRegistry } from '@interop/was-react'
 
 /**
- * `updatedAt` and `writerId` are REQUIRED by the sync layer: remote conflicts
- * are resolved last-writer-wins on the payload's own `(updatedAt, writerId)`,
- * so every insert/update must stamp both (see NotesPage). A payload without
- * them loses every conflict to the server copy.
+ * `updatedAt` and `writerId` are the last-write-wins fields the sync layer
+ * resolves remote conflicts on. The app never stamps them: the entity store's
+ * persisted write verbs (`insert` / `update` / `upsert`) stamp both themselves
+ * on every write. They stay on the payload type because the stored rows carry
+ * them, and reads (sorting, display) may use them.
  */
 export interface Note {
   id: string

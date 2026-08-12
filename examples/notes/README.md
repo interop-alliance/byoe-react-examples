@@ -64,8 +64,8 @@ covers what the example ships and how to make it your own.
   in-memory store hydrated from the encrypted local replica and replicated to
   WAS in the background.
 - An **MUI app shell** (`src/components/AppShell.tsx`): a top bar with the app
-  name, the library's `SyncStatusChip` (local-only / syncing / synced / error), a
-  logout button, and the `ReconnectBanner` shown when granted access nears
+  name, the library's `SyncStatusChip` (local-only / syncing / synced / error),
+  a logout button, and the `ReconnectBanner` shown when granted access nears
   expiry.
 - A **dev provisioning script** (`scripts/provision-dev-grants.ts`) for syncing
   against a local WAS server without a wallet in the loop, and a **three-tier
@@ -196,10 +196,12 @@ Then, to turn "BYOE Notes" into your own app:
    Then build a page against your store's `insert` / `update` / `remove` verbs,
    modeled on `src/pages/NotesPage.tsx`, and route to it in `src/App.tsx`.
 
-   Every entity payload MUST carry `updatedAt` (ISO timestamp) and `writerId`
-   (from the library's `getWriterId()`), stamped on every insert and update:
-   remote conflicts are resolved last-writer-wins on that pair, and a payload
-   without them loses every conflict to the server copy.
+   Stored payloads carry `updatedAt` (ISO timestamp) and `writerId` -- remote
+   conflicts are resolved last-writer-wins on that pair -- but the app never
+   stamps them: `insert` / `update` / `upsert` stamp both themselves on every
+   write, overwriting anything a caller supplies. Keep the two fields on the
+   payload type (the stored rows carry them, and reads may sort or display on
+   them); `useSession().writerId` is for display and debugging.
 
 ## Testing
 
@@ -227,8 +229,7 @@ pnpm run test:browser:wallet # Playwright full wallet login flow; local/manual
 - **`test:browser:wallet`** (`playwright.wallet.config.ts`) boots the WAS server
   the same way, plus a `freewallet` dev server from a local checkout: set
   `FREEWALLET_DIR` to its path (dependencies are installed on first use), then
-  the full Login With Wallet flow runs. This is a local/manual tier, not for
-  CI.
+  the full Login With Wallet flow runs. This is a local/manual tier, not for CI.
 
 ## Contribute
 

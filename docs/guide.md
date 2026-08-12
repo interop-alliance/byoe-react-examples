@@ -20,11 +20,11 @@ app-private vs well-known interop collections, how much the app does before
 "Login with Wallet" -- but in practice those axes correlate into a ladder of
 tiers, each a superset of the one below:
 
-| Tier | Shape                                                                          | Example app                               | Library entry point                  |
-| ---- | ------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------------ |
-| 1    | One app-private document, key-value read/write                                 | A text editor; an Excalidraw-style canvas | `defineDocumentApp` / `useAppDocument`  |
-| 2    | Read/write CRUD on one or two well-known interop collections                   | A contacts manager; a notes app           | `createEntityStore` + `WasAppConfig` |
-| 3    | Several well-known and app-specific collections, encrypted and public-readable | A microblogging client                    | (planned)                            |
+| Tier | Shape                                                                          | Example app                               | Library entry point                    |
+| ---- | ------------------------------------------------------------------------------ | ----------------------------------------- | -------------------------------------- |
+| 1    | One app-private document, key-value read/write                                 | A text editor; an Excalidraw-style canvas | `defineDocumentApp` / `useAppDocument` |
+| 2    | Read/write CRUD on one or two well-known interop collections                   | A contacts manager; a notes app           | `createEntityStore` + `WasAppConfig`   |
+| 3    | Several well-known and app-specific collections, encrypted and public-readable | A microblogging client                    | (planned)                              |
 
 The tiers are library _layers_, not different app architectures: a tier-1 app is
 expressible without ever seeing entity stores, grants, or sync internals, and
@@ -122,7 +122,7 @@ rest of the example is editor code.
 
 ## Growing up: from tier 1 to tier 2
 
-Diff the two examples and every difference is one of these five moves:
+Diff the two examples and every difference is one of these four moves:
 
 1. **One document becomes named collections.** `document: { collectionId }`
    becomes a `COLLECTIONS` list in a `WasAppConfig`, mapping each app-side `key`
@@ -134,13 +134,10 @@ Diff the two examples and every difference is one of these five moves:
    encrypted replica) and a `StoreRegistry` entry wiring its `hydrate` /
    `upsert` / `drop` / `clear` handlers, so login, remote sync, and logout can
    drive it.
-3. **LWW stamping becomes your job.** The `useAppDocument` facade stamped
-   `updatedAt` / `writerId` for you; entity payloads must carry them explicitly
-   (see [Data rules](#data-rules-that-apply-everywhere)).
-4. **`connect()` becomes a login page.** With `onboarding: 'login-gated'`, the
+3. **`connect()` becomes a login page.** With `onboarding: 'login-gated'`, the
    library's `ProtectedRoute` gates the app and your login page drives
    `useLogin` -- offering `AdoptDialog` when local data exists.
-5. **The chrome grows.** A tier-2 app wants the `SyncStatusChip`, the
+4. **The chrome grows.** A tier-2 app wants the `SyncStatusChip`, the
    `ReconnectBanner`, and an explicit logout -- the notes `AppShell` is the
    reference wiring.
 
@@ -162,8 +159,7 @@ one file:
   CHAPI login via `useLogin`, with the adoption dialog when the anonymous
   replica holds data.
 - [`src/pages/NotesPage.tsx`](../examples/notes/src/pages/NotesPage.tsx) --
-  list/add/edit/delete against the store's `insert` / `update` / `remove` verbs;
-  every write stamps the LWW fields.
+  list/add/edit/delete against the store's `insert` / `update` / `remove` verbs.
 - [`src/components/AppShell.tsx`](../examples/notes/src/components/AppShell.tsx)
   -- top bar with `SyncStatusChip`, `ReconnectBanner`, logout.
 - [`src/App.tsx`](../examples/notes/src/App.tsx) -- the route table: `/login`
@@ -181,11 +177,14 @@ for turning the example into your own app.
 
 ## Data rules that apply everywhere
 
-- **Every entity payload carries `updatedAt` (ISO timestamp) and `writerId`.**
-  Sync resolves conflicts last-writer-wins on that pair; a payload missing them
-  loses every conflict. The `useAppDocument` facade stamps them for you;
-  entity-store apps stamp them on every insert and update (get this
-  installation's writer id from the library's `getWriterId()`).
+- **Every stored payload carries `updatedAt` (ISO timestamp) and `writerId`, and
+  the library stamps both for you.** Sync resolves conflicts last-writer-wins on
+  that pair. The entity store's persisted write verbs (`insert` / `update` /
+  `upsert`) and the `useAppDocument` facade stamp them on every write,
+  overwriting anything an app supplies -- so apps never stamp, and keep the two
+  fields on their payload type only because the stored rows carry them (reads
+  may sort or display on them). `useSession().writerId` is for display and
+  debugging.
 - **Collection ids are the interop surface.** Use a generic, unprefixed id
   (`notes`, `contacts`) when you intend other apps to read the same data; use an
   app-named id (`text-editor-document`) for app-private sandbox data. The two
@@ -196,24 +195,25 @@ for turning the example into your own app.
   encrypted to that app's identity key, so a matching id alone yields
   ciphertext. Reading a collection you do not own is a separate, explicit grant:
   declare it in `WasAppConfig.sharedCollections` (`{ key, id }`), which adds a
-  `https://w3id.org/byoe#shared-collection` descriptor with the read-only `GET`/`HEAD` action
-  set to the login request. Approving it fuses two axes in one consent -- a
-  read-only capability on the collection AND an entry in its key-epoch roster --
-  and the app reads through a `SharedCollectionReader` (`useSharedCollection(key)`),
-  never through replication: shared collections are read-only, never written, and
-  have no local replica. The recipient key is **derived, never transmitted**: it
-  is the X25519 twin of the app's `did:key` controller, which the wallet computes
-  from the controller DID alone, so no key material touches the wire and no
-  request can pair one app's DID with another's key. A wallet that predates the
-  descriptor type reports the request unsatisfiable and the login fails closed --
-  deliberately, since a capability without the roster entry would deliver
-  ciphertext that looks like corrupt data. Two honest limits, the same ones the
-  wallet's consent screen states: removing access stops future reads but cannot
-  take back what was already read, and resources written before the collection's
-  first share are sealed to the owner alone and will not decrypt for the grantee.
+  `https://w3id.org/byoe#shared-collection` descriptor with the read-only
+  `GET`/`HEAD` action set to the login request. Approving it fuses two axes in
+  one consent -- a read-only capability on the collection AND an entry in its
+  key-epoch roster -- and the app reads through a `SharedCollectionReader`
+  (`useSharedCollection(key)`), never through replication: shared collections
+  are read-only, never written, and have no local replica. The recipient key is
+  **derived, never transmitted**: it is the X25519 twin of the app's `did:key`
+  controller, which the wallet computes from the controller DID alone, so no key
+  material touches the wire and no request can pair one app's DID with another's
+  key. A wallet that predates the descriptor type reports the request
+  unsatisfiable and the login fails closed -- deliberately, since a capability
+  without the roster entry would deliver ciphertext that looks like corrupt
+  data. Two honest limits, the same ones the wallet's consent screen states:
+  removing access stops future reads but cannot take back what was already read,
+  and resources written before the collection's first share are sealed to the
+  owner alone and will not decrypt for the grantee.
 - **Local storage names are the opposite of the interop surface.** `dbName` and
   `storageKeyPrefix` name the encrypted replica and the device/seed keys in
-  *this browser*, so give every app its own. Left at the library defaults, two
+  _this browser_, so give every app its own. Left at the library defaults, two
   apps served from one origin (two examples on `localhost`, say) collide on a
   single database, and the second to open it dead-ends in `boot`. Pin a distinct
   dev-server port per app for the same reason.

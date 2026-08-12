@@ -1,10 +1,11 @@
 /**
  * Round-trips the notes entity store through the encrypted local replica: opens
  * the app's own LocalStore (its COLLECTIONS, the dev seed) on fake-indexeddb,
- * installs it, then drives useNotes insert / update / remove and asserts the
- * registry hydrate re-reads the persisted, decrypted rows. A fresh replaceAll([])
- * before each hydrate proves the docs come back from the replica, not stale
- * in-memory Map state.
+ * installs it along with a writer id (no session store creates one here, and
+ * the write verbs stamp with it), then drives useNotes insert / update / remove
+ * and asserts the registry hydrate re-reads the persisted, decrypted rows. A
+ * fresh replaceAll([]) before each hydrate proves the docs come back from the
+ * replica, not stale in-memory Map state.
  *
  * @vitest-environment node
  */
@@ -16,7 +17,8 @@ import {
   deriveIdentity,
   hasStore,
   LocalStore,
-  setLocalStore
+  setLocalStore,
+  setWriterId
 } from '@interop/was-react'
 import { COLLECTIONS } from '../../src/app.config'
 import { DEV_SEED } from '../../src/dev/devSeed'
@@ -36,15 +38,35 @@ if (!notesEntry) {
   throw new Error('the notes registry entry is missing')
 }
 
-function makeNote(text: string): Note {
-  const now = new Date().toISOString()
+/** The writer id installed for this suite, stamped onto every write. */
+const TEST_WRITER_ID = 'test-writer'
+
+/**
+ * A note payload as the app writes one: no LWW fields, which the entity
+ * store's write verbs stamp themselves.
+ */
+function makeNote(text: string): Omit<Note, 'updatedAt' | 'writerId'> {
   return {
     id: crypto.randomUUID(),
     text,
-    createdAt: now,
-    updatedAt: now,
-    writerId: 'test-writer'
+    createdAt: new Date().toISOString()
   }
+}
+
+/**
+ * Asserts a hydrated note carries the written fields plus LWW stamps the write
+ * verb minted: this session's writer id and a parseable ISO instant.
+ *
+ * @param actual {Note | undefined}
+ * @param expected {object} The app-supplied payload.
+ */
+function expectStoredNote(
+  actual: Note | undefined,
+  expected: Omit<Note, 'updatedAt' | 'writerId'>
+) {
+  expect(actual).toMatchObject(expected)
+  expect(actual?.writerId).toBe(TEST_WRITER_ID)
+  expect(Number.isNaN(Date.parse(actual?.updatedAt ?? ''))).toBe(false)
 }
 
 async function openStore(name: string): Promise<LocalStore> {
@@ -84,6 +106,9 @@ async function openStore(name: string): Promise<LocalStore> {
 }
 
 beforeEach(async () => {
+  // No session store is created here (the replica is driven directly), so the
+  // writer id the write verbs stamp with has to be installed by hand.
+  setWriterId(TEST_WRITER_ID)
   dbName = `byoe-notes-test-${++dbCounter}`
   store = await openStore(dbName)
   useNotes.getState().replaceAll([])
@@ -116,18 +141,14 @@ describe('notes store round-trip through the encrypted LocalStore', () => {
 
     const byId = useNotes.getState().byId
     expect(byId.size).toBe(1)
-    expect(byId.get(note.id)).toEqual(note)
+    expectStoredNote(byId.get(note.id), note)
   })
 
   it('updates a note in place, reflected after a fresh hydrate', async () => {
     const note = makeNote('First text')
     await useNotes.getState().insert(note)
 
-    const updated: Note = {
-      ...note,
-      text: 'Second text',
-      updatedAt: new Date().toISOString()
-    }
+    const updated = { ...note, text: 'Second text' }
     await useNotes.getState().update(updated)
 
     useNotes.getState().replaceAll([])
@@ -135,7 +156,7 @@ describe('notes store round-trip through the encrypted LocalStore', () => {
 
     const byId = useNotes.getState().byId
     expect(byId.size).toBe(1)
-    expect(byId.get(note.id)).toEqual(updated)
+    expectStoredNote(byId.get(note.id), updated)
   })
 
   it('removes a note, gone after a fresh hydrate', async () => {
@@ -152,7 +173,7 @@ describe('notes store round-trip through the encrypted LocalStore', () => {
     const byId = useNotes.getState().byId
     expect(byId.size).toBe(1)
     expect(byId.has(drop.id)).toBe(false)
-    expect(byId.get(keep.id)).toEqual(keep)
+    expectStoredNote(byId.get(keep.id), keep)
   })
 
   it('encrypts at rest: no note text in the stored envelope', async () => {
@@ -177,6 +198,6 @@ describe('notes store round-trip through the encrypted LocalStore', () => {
     useNotes.getState().replaceAll([])
     await notesEntry.hydrate()
 
-    expect(useNotes.getState().byId.get(note.id)).toEqual(note)
+    expectStoredNote(useNotes.getState().byId.get(note.id), note)
   })
 })

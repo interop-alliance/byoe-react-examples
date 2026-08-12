@@ -19,14 +19,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { uuidv7 } from 'uuidv7'
-import { getWriterId } from '@interop/was-react'
 import { useNotes, type Note } from '@/stores/notes'
-
-/**
- * This installation's writer id (the LWW attribution label, never an
- * identity), under the library's default localStorage key.
- */
-const writerId = () => getWriterId()
 
 /**
  * One note in the list: display mode (text + created date, edit/delete icons)
@@ -41,20 +34,14 @@ function NoteRow({ note }: { note: Note }) {
   const [draft, setDraft] = useState(note.text)
 
   /**
-   * Commit the edit: persist the trimmed draft with fresh LWW stamps
-   * (`updatedAt` + `writerId` -- without them the write loses every sync
-   * conflict, see the Note type) and leave edit mode. An empty or unchanged
-   * draft just closes the editor without writing.
+   * Commit the edit: persist the trimmed draft and leave edit mode. The LWW
+   * fields (`updatedAt` + `writerId`) are stamped by the store verb, not here.
+   * An empty or unchanged draft just closes the editor without writing.
    */
   async function save() {
     const text = draft.trim()
     if (text && text !== note.text) {
-      await update({
-        ...note,
-        text,
-        updatedAt: new Date().toISOString(),
-        writerId: writerId()
-      })
+      await update({ ...note, text })
     }
     setEditing(false)
   }
@@ -139,22 +126,19 @@ export function NotesPage() {
   )
 
   /**
-   * Insert the typed note (ignoring a blank textbox) under a fresh uuidv7 id
-   * with the LWW stamps the sync layer requires, then clear the textbox for
-   * the next one.
+   * Insert the typed note (ignoring a blank textbox) under a fresh uuidv7 id,
+   * then clear the textbox for the next one. The store verb stamps the LWW
+   * fields itself.
    */
   async function addNote() {
     const trimmed = text.trim()
     if (!trimmed) {
       return
     }
-    const now = new Date().toISOString()
     await insert({
       id: uuidv7(),
       text: trimmed,
-      createdAt: now,
-      updatedAt: now,
-      writerId: writerId()
+      createdAt: new Date().toISOString()
     })
     setText('')
   }

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 - TBD
+
+### Changed
+
+- Both examples: upgrade `@interop/was-react` to `^0.14.0`. The entity store's
+  persisted write verbs (`insert` / `update` / `upsert`) now stamp the
+  last-write-wins fields `updatedAt` / `writerId` themselves.
+- Notes: drop the hand-stamping of `updatedAt` / `writerId` and the `writerId`
+  threading at write sites in `NotesPage`. The fields stay on the `Note` type
+  (stored rows carry them).
+- Notes: the node store test installs a writer id with `setWriterId` (it drives
+  `setLocalStore` directly, so no session store installs one) and asserts the
+  stamps the verbs mint rather than caller-supplied values.
+- Docs: the guide and the notes README state the callee guarantee -- apps never
+  stamp the LWW fields; `useSession().writerId` is display/debug only.
+
 ## 0.3.0 - 2026-08-12
 
 ### Changed
@@ -22,9 +38,9 @@
 ### Changed
 
 - Both examples: upgrade `@interop/was-react` to `^0.10.0` (grant requests and
-  required actions are now capped at the App Connect descriptor class
-  ceilings; `0.10.1` fixes a logout racing the post-reload remount churn). No
-  app code changes.
+  required actions are now capped at the App Connect descriptor class ceilings;
+  `0.10.1` fixes a logout racing the post-reload remount churn). No app code
+  changes.
 
 ## 0.2.0 - 2026-08-03
 
@@ -73,9 +89,9 @@
   the master seed are gone, so `LocalStore.init` takes
   `{ keyAgreementKey, keyResolver }` (from `deriveIdentity`) instead of `seed`;
   the notes example's store test, which opens a `LocalStore` directly, derives
-  them first. Apps on `createAuthStore` are unaffected. Both examples now
-  depend on `@interop/was-react` `^0.8.1`, which carries the change; data
-  written under the old per-collection keys does not decrypt.
+  them first. Apps on `createAuthStore` are unaffected. Both examples now depend
+  on `@interop/was-react` `^0.8.1`, which carries the change; data written under
+  the old per-collection keys does not decrypt.
 - The `@interop/was-react` bump to `^0.8.1` also brings in the library's later
   releases: the BYOE wire vocabulary moved from the retired `urn:was:` scheme to
   the shared `https://w3id.org/byoe#` namespace (matching wallets renamed in
@@ -87,17 +103,18 @@
   examples sit entirely on the high-level hooks. `was-teaching-server` (the
   notes example's test backend) is bumped to `^0.16.1` to match.
 - `docs/guide.md`: the "data rules" section now describes how an app reads a
-  collection it does not own. A matching collection id yields capabilities on the
-  same collection but not the ability to decrypt it; access is a separate,
+  collection it does not own. A matching collection id yields capabilities on
+  the same collection but not the ability to decrypt it; access is a separate,
   explicit grant declared in `WasAppConfig.sharedCollections`, which adds a
-  `https://w3id.org/byoe#shared-collection` descriptor with a read-only action set to the login
-  request and fuses a read capability with an entry in the collection's key-epoch
-  roster. The recipient key is derived from the app's `did:key` controller and
-  never transmitted, reads go through a `SharedCollectionReader` rather than
-  replication, and a wallet that predates the descriptor type fails closed. The
-  guide also states the ceiling: removing access stops future reads but cannot
-  take back what was already read, and resources written before a collection's
-  first share stay sealed to the owner alone.
+  `https://w3id.org/byoe#shared-collection` descriptor with a read-only action
+  set to the login request and fuses a read capability with an entry in the
+  collection's key-epoch roster. The recipient key is derived from the app's
+  `did:key` controller and never transmitted, reads go through a
+  `SharedCollectionReader` rather than replication, and a wallet that predates
+  the descriptor type fails closed. The guide also states the ceiling: removing
+  access stops future reads but cannot take back what was already read, and
+  resources written before a collection's first share stay sealed to the owner
+  alone.
 - The repo is now an examples workspace (`byoe-react-examples`) rather than a
   single template app: the notes app moved wholesale to `examples/notes` as its
   own package (`byoe-notes-example`), keeping its scripts and all four test
