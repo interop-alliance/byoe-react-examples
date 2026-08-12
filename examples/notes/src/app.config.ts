@@ -3,7 +3,7 @@
  * registry, and the one `WasAppConfig` the library consumes.
  *
  * When renaming this template into a real app, this file is the first stop:
- * app name, credential type/vocab, and the collection list all live here.
+ * app name, canonical app URL, and the collection list all live here.
  */
 import type { WasAppConfig, WasCollectionConfig } from '@interop/was-react'
 
@@ -16,6 +16,13 @@ const env: Record<string, string | undefined> =
 // This app's own origin: the CHAPI anti-phishing origin binding on the app-key
 // credential. Must match the URL the app is actually served from.
 export const APP_ORIGIN = env.VITE_APP_ORIGIN || 'http://localhost:5173'
+
+// This app's canonical URL: what names THIS application among the applications
+// served from its origin, so the app-key identity is scoped to the triple
+// (user, origin, appUrl). Absolute, fragment-less, and same-origin with the
+// origin above. A stable path on the origin is enough (it is an identifier,
+// not a fetch target); an app with a Web App Manifest would use its `id`.
+export const APP_URL = env.VITE_APP_URL || `${APP_ORIGIN}/notes`
 
 // Auth mode: 'wallet' (default) gates the app behind Login With Wallet
 // (CHAPI); 'dev' boots straight into the local anonymous replica with no login
@@ -56,15 +63,12 @@ export const COLLECTIONS: WasCollectionConfig[] = [
 export const appConfig: WasAppConfig = {
   appName: 'BYOE Notes',
   appOrigin: APP_ORIGIN,
+  appUrl: APP_URL,
   // Wallet mode gates the app behind login; dev mode is local-first (a usable
   // anonymous replica with no login gate). Only affects the router's rendering,
   // never the store's transitions.
   onboarding: AUTH_MODE === 'wallet' ? 'login-gated' : 'local-first',
   collections: COLLECTIONS,
-  credential: {
-    credentialType: 'ByoeNotesAppKey',
-    vocabBase: 'urn:byoe-notes:vocab#'
-  },
   sync: {
     ...(WAS_SYNC_RETRY_MS !== undefined && { retryMs: WAS_SYNC_RETRY_MS }),
     ...(WAS_SYNC_POLL_MS !== undefined && { pollMs: WAS_SYNC_POLL_MS })

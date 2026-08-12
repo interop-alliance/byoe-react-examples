@@ -19,13 +19,14 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { uuidv7 } from 'uuidv7'
-import { getClientId } from '@interop/was-react'
+import { getWriterId } from '@interop/was-react'
 import { useNotes, type Note } from '@/stores/notes'
 
 /**
- * This installation's client id, under the library's default localStorage key.
+ * This installation's writer id (the LWW attribution label, never an
+ * identity), under the library's default localStorage key.
  */
-const clientId = () => getClientId()
+const writerId = () => getWriterId()
 
 /**
  * One note in the list: display mode (text + created date, edit/delete icons)
@@ -41,7 +42,7 @@ function NoteRow({ note }: { note: Note }) {
 
   /**
    * Commit the edit: persist the trimmed draft with fresh LWW stamps
-   * (`updatedAt` + `clientId` -- without them the write loses every sync
+   * (`updatedAt` + `writerId` -- without them the write loses every sync
    * conflict, see the Note type) and leave edit mode. An empty or unchanged
    * draft just closes the editor without writing.
    */
@@ -52,7 +53,7 @@ function NoteRow({ note }: { note: Note }) {
         ...note,
         text,
         updatedAt: new Date().toISOString(),
-        clientId: clientId()
+        writerId: writerId()
       })
     }
     setEditing(false)
@@ -153,7 +154,7 @@ export function NotesPage() {
       text: trimmed,
       createdAt: now,
       updatedAt: now,
-      clientId: clientId()
+      writerId: writerId()
     })
     setText('')
   }

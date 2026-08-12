@@ -16,6 +16,12 @@ const env: Record<string, string | undefined> =
 // credential. Must match the URL the app is actually served from.
 export const APP_ORIGIN = env.VITE_APP_ORIGIN || 'http://localhost:5174'
 
+// This app's canonical URL: what names THIS application among the applications
+// served from its origin, so the app-key identity is scoped to the triple
+// (user, origin, appUrl). Absolute, fragment-less, and same-origin with the
+// origin above.
+export const APP_URL = env.VITE_APP_URL || `${APP_ORIGIN}/text-editor`
+
 // The document before the first write: a short welcome explaining how the app
 // works. It is ordinary document text -- edit or delete it and the change
 // persists like any other; Clear Data restores it with the fresh document.
@@ -36,13 +42,10 @@ export const { config, registry, useAppDocument } =
   defineDocumentApp<TextDocument>({
     appName: 'Text Editor',
     appOrigin: APP_ORIGIN,
+    appUrl: APP_URL,
     document: {
       collectionId: 'text-editor-document',
       initial: { text: INITIAL_TEXT }
-    },
-    credential: {
-      credentialType: 'TextEditorAppKey',
-      vocabBase: 'urn:text-editor:vocab#'
     },
     dbName: 'text-editor',
     storageKeyPrefix: 'text-editor:'

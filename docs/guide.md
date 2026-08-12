@@ -86,13 +86,10 @@ export const { config, registry, useAppDocument } =
   defineDocumentApp<TextDocument>({
     appName: 'Text Editor',
     appOrigin: APP_ORIGIN,
+    appUrl: APP_URL,
     document: {
       collectionId: 'text-editor-document',
       initial: { text: INITIAL_TEXT }
-    },
-    credential: {
-      credentialType: 'TextEditorAppKey',
-      vocabBase: 'urn:text-editor:vocab#'
     },
     dbName: 'text-editor',
     storageKeyPrefix: 'text-editor:'
@@ -138,7 +135,7 @@ Diff the two examples and every difference is one of these five moves:
    `upsert` / `drop` / `clear` handlers, so login, remote sync, and logout can
    drive it.
 3. **LWW stamping becomes your job.** The `useAppDocument` facade stamped
-   `updatedAt` / `clientId` for you; entity payloads must carry them explicitly
+   `updatedAt` / `writerId` for you; entity payloads must carry them explicitly
    (see [Data rules](#data-rules-that-apply-everywhere)).
 4. **`connect()` becomes a login page.** With `onboarding: 'login-gated'`, the
    library's `ProtectedRoute` gates the app and your login page drives
@@ -184,11 +181,11 @@ for turning the example into your own app.
 
 ## Data rules that apply everywhere
 
-- **Every entity payload carries `updatedAt` (ISO timestamp) and `clientId`.**
+- **Every entity payload carries `updatedAt` (ISO timestamp) and `writerId`.**
   Sync resolves conflicts last-writer-wins on that pair; a payload missing them
   loses every conflict. The `useAppDocument` facade stamps them for you;
-  entity-store apps stamp them on every insert and update (get the device id
-  from the library's `getClientId()`).
+  entity-store apps stamp them on every insert and update (get this
+  installation's writer id from the library's `getWriterId()`).
 - **Collection ids are the interop surface.** Use a generic, unprefixed id
   (`notes`, `contacts`) when you intend other apps to read the same data; use an
   app-named id (`text-editor-document`) for app-private sandbox data. The two

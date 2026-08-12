@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.3.0 - TBD
+
+### Changed
+
+- Both examples: upgrade `@interop/was-react` to `^0.13.0` and adopt the App
+  Connect `appUrl` profile. Each app configures an `appUrl` -- its canonical
+  URL, which names the application within its origin, so the app-key identity is
+  scoped to (user, origin, `appUrl`) -- in place of the removed
+  `credential: { credentialType, vocabBase }`: `http://localhost:5173/notes` for
+  notes and `http://localhost:5174/text-editor` for the text editor, both
+  overridable with `VITE_APP_URL`.
+- Notes: the LWW attribution label is `writerId` (`getWriterId()`), renamed from
+  `clientId` / `getClientId()`; the `Note` payload field follows.
+- Notes: the node test opens its replica with an epoch-bearing encryption
+  descriptor per collection (epoch-from-birth), minted with wallet-core's
+  `mintRecordEncryption`.
+
+## 0.2.1 - TBD
+
+### Changed
+
+- Both examples: upgrade `@interop/was-react` to `^0.10.0` (grant requests and
+  required actions are now capped at the App Connect descriptor class
+  ceilings; `0.10.1` fixes a logout racing the post-reload remount churn). No
+  app code changes.
+
 ## 0.2.0 - 2026-08-03
 
 ### Added

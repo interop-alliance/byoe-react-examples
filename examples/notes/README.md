@@ -144,6 +144,7 @@ All are optional; see `src/app.config.ts` for the defaults.
 | ------------------------- | ------------------------ | ------------------------------------------------------------------ |
 | `VITE_AUTH_MODE`          | `wallet`                 | `wallet` (login-gated) or `dev` (local-first, no login gate).      |
 | `VITE_APP_ORIGIN`         | `http://localhost:5173`  | This app's origin; the CHAPI anti-phishing binding on the app key. |
+| `VITE_APP_URL`            | `<origin>/notes`         | This app's canonical URL; names the app within its origin.         |
 | `VITE_WAS_DEV_SYNC`       | `false`                  | Dev mode only: replicate to WAS using a provisioned grants file.   |
 | `VITE_WAS_DEV_GRANTS_URL` | `/dev-grants.local.json` | Where the app fetches the dev grants JSON from.                    |
 | `VITE_WAS_SYNC_RETRY_MS`  | (library default)        | Replication retry backoff, in ms.                                  |
@@ -175,10 +176,10 @@ workspace root are not included -- add your own or copy the root
 Then, to turn "BYOE Notes" into your own app:
 
 1. **`package.json`** -- change `name` and `description`.
-2. **`src/app.config.ts`** -- set `appConfig.appName`, the
-   `credential.credentialType` and `credential.vocabBase` (a unique credential
-   type and vocab URI for your app's seed credential), and the `COLLECTIONS`
-   list (see step 5).
+2. **`src/app.config.ts`** -- set `appConfig.appName`, the `APP_URL` (your app's
+   canonical URL: absolute, fragment-less, same-origin with the app's origin --
+   it is what names your application within that origin, so the app-key identity
+   is scoped to it), and the `COLLECTIONS` list (see step 5).
 3. **`index.html`** -- change the `<title>`.
 4. **UI strings** -- replace the "BYOE Notes" text in
    `src/components/AppShell.tsx` and `src/pages/LoginPage.tsx`.
@@ -195,8 +196,8 @@ Then, to turn "BYOE Notes" into your own app:
    Then build a page against your store's `insert` / `update` / `remove` verbs,
    modeled on `src/pages/NotesPage.tsx`, and route to it in `src/App.tsx`.
 
-   Every entity payload MUST carry `updatedAt` (ISO timestamp) and `clientId`
-   (from the library's `getClientId()`), stamped on every insert and update:
+   Every entity payload MUST carry `updatedAt` (ISO timestamp) and `writerId`
+   (from the library's `getWriterId()`), stamped on every insert and update:
    remote conflicts are resolved last-writer-wins on that pair, and a payload
    without them loses every conflict to the server copy.
 

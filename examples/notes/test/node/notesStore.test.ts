@@ -10,6 +10,7 @@
  */
 import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { mintRecordEncryption } from '@interop/wallet-core/keyring'
 import {
   clearLocalStore,
   deriveIdentity,
@@ -24,6 +25,11 @@ import { registry, useNotes, type Note } from '../../src/stores/notes'
 let dbCounter = 0
 let store: LocalStore | null = null
 let dbName = ''
+/** The minted encryption descriptors of each test database, by db name. */
+const descriptorsByDb = new Map<
+  string,
+  Record<string, Awaited<ReturnType<typeof mintRecordEncryption>>>
+>()
 
 const notesEntry = registry.notes
 if (!notesEntry) {
@@ -37,7 +43,7 @@ function makeNote(text: string): Note {
     text,
     createdAt: now,
     updatedAt: now,
-    clientId: 'test-device'
+    writerId: 'test-writer'
   }
 }
 
@@ -48,11 +54,30 @@ async function openStore(name: string): Promise<LocalStore> {
   const { keyAgreementKey, keyResolver } = await deriveIdentity({
     seed: DEV_SEED
   })
+  // Epoch-from-birth: a private collection's cipher only exists from an
+  // epoch-bearing encryption descriptor, so this replica mints one per
+  // collection, sealed to its own identity KAK -- what the library's anonymous
+  // replica does at a collection's local birth. Minted once per database name
+  // and reused on reopen (the library persists them beside the anon seed), so
+  // a reopened replica decrypts the rows the previous one sealed.
+  const cached = descriptorsByDb.get(name)
+  const descriptors =
+    cached ??
+    Object.fromEntries(
+      await Promise.all(
+        COLLECTIONS.map(async ({ id }) => [
+          id,
+          await mintRecordEncryption({ keyAgreementKey })
+        ])
+      )
+    )
+  descriptorsByDb.set(name, descriptors)
   const opened = await LocalStore.init({
     keyAgreementKey,
     keyResolver,
     collections: COLLECTIONS,
-    dbName: name
+    dbName: name,
+    descriptors
   })
   setLocalStore(opened)
   return opened
