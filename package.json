@@ -1,7 +1,7 @@
 {
   "name": "byoe-react-examples",
   "description": "Examples for building 'Bring Your Own Everything' (BYOE) apps on Wallet Attached Storage with @interop/was-react: one example app per tier, from a single-document local-first game save to a wallet-gated multi-collection CRUD app.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
