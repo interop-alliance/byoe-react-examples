@@ -11,12 +11,12 @@
  */
 import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { mintRecordEncryption } from '@interop/wallet-core/keyring'
 import {
   clearLocalStore,
   deriveIdentity,
   hasStore,
   LocalStore,
+  mintRecordEncryption,
   setLocalStore,
   setWriterId
 } from '@interop/was-react'

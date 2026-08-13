@@ -15,6 +15,9 @@
   stamps the verbs mint rather than caller-supplied values.
 - Docs: the guide and the notes README state the callee guarantee -- apps never
   stamp the LWW fields; `useSession().writerId` is display/debug only.
+- Both examples: upgrade `@interop/was-react` to `^0.16.0`. Notes imports
+  `mintRecordEncryption` from it (the root entry now re-exports it beside
+  `LocalStore`) and drops the test-only `@interop/wallet-core` devDependency.
 
 ## 0.3.0 - 2026-08-12
 
