@@ -69,6 +69,13 @@ export const appConfig: WasAppConfig = {
   // never the store's transitions.
   onboarding: AUTH_MODE === 'wallet' ? 'login-gated' : 'local-first',
   collections: COLLECTIONS,
+  // Local storage names, deliberately app-specific (unlike the collection ids
+  // above, which are the shared interop surface). `clearLocalData()` sweeps
+  // every IndexedDB database under `dbName`, so leaving the library default
+  // here would let this app erase the replica of another default-configured
+  // was-react app served from the same origin.
+  dbName: 'byoe-notes',
+  storageKeyPrefix: 'byoe-notes:',
   sync: {
     ...(WAS_SYNC_RETRY_MS !== undefined && { retryMs: WAS_SYNC_RETRY_MS }),
     ...(WAS_SYNC_POLL_MS !== undefined && { pollMs: WAS_SYNC_POLL_MS })

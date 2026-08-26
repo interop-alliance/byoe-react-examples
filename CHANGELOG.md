@@ -19,6 +19,16 @@
   `mintRecordEncryption` from it (the root entry now re-exports it beside
   `LocalStore`) and drops the test-only `@interop/wallet-core` devDependency.
 
+### Fixed
+
+- Notes: name its own local storage (`dbName: 'byoe-notes'`,
+  `storageKeyPrefix: 'byoe-notes:'`) instead of inheriting the library
+  defaults. `clearLocalData()` sweeps every IndexedDB database under `dbName`,
+  so a default-configured app clearing its data would also erase the replica of
+  another default-configured was-react app on the same origin. Changing the
+  base name orphans an existing install's data (the replica is named per
+  controller DID beneath it); acceptable for an example app.
+
 ## 0.3.0 - 2026-08-12
 
 ### Changed
