@@ -18,16 +18,33 @@
 - Both examples: upgrade `@interop/was-react` to `^0.16.0`. Notes imports
   `mintRecordEncryption` from it (the root entry now re-exports it beside
   `LocalStore`) and drops the test-only `@interop/wallet-core` devDependency.
+- Both examples: upgrade `@interop/was-react` to `^0.20.1`. App code is
+  unchanged. The notes store test attaches its replica through a
+  `StorageContext`, replacing the removed `setLocalStore` / `setWriterId`
+  holders.
+- Notes: bump the `was-teaching-server` devDependency to `^0.25.1`, which
+  verifies the `eddsa-jcs-2022` zcap proofs was-react 0.20 signs with.
+- Both examples: upgrade `@interop/was-react` to `^0.22.2`. App code is
+  unchanged. The replica schema changed in 0.21 with no migration, so an
+  existing local replica must be cleared once (clear local data, log in again).
+- Notes: bump the `was-teaching-server` devDependency to `^0.29.0`, which reads
+  a public collection's equality indexes from the `plaintext.indexes` member
+  was-react 0.22.1 declares them under.
+- Both examples: raise the `rxdb` peer to `^17.5.0`. Under 17.4 the Dexie
+  storage never evicted a closed connection from its name cache, so a
+  logout-and-erase followed by a login in the same page reopened the replica on
+  a closed Dexie instance and failed with `DatabaseClosedError` (rxdb #8793,
+  fixed in 17.5.0).
 
 ### Fixed
 
 - Notes: name its own local storage (`dbName: 'byoe-notes'`,
-  `storageKeyPrefix: 'byoe-notes:'`) instead of inheriting the library
-  defaults. `clearLocalData()` sweeps every IndexedDB database under `dbName`,
-  so a default-configured app clearing its data would also erase the replica of
-  another default-configured was-react app on the same origin. Changing the
-  base name orphans an existing install's data (the replica is named per
-  controller DID beneath it); acceptable for an example app.
+  `storageKeyPrefix: 'byoe-notes:'`) instead of inheriting the library defaults.
+  `clearLocalData()` sweeps every IndexedDB database under `dbName`, so a
+  default-configured app clearing its data would also erase the replica of
+  another default-configured was-react app on the same origin. Changing the base
+  name orphans an existing install's data (the replica is named per controller
+  DID beneath it); acceptable for an example app.
 
 ## 0.3.0 - 2026-08-12
 

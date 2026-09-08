@@ -1,8 +1,9 @@
 /**
  * Round-trips the notes entity store through the encrypted local replica: opens
  * the app's own LocalStore (its COLLECTIONS, the dev seed) on fake-indexeddb,
- * installs it along with a writer id (no session store creates one here, and
- * the write verbs stamp with it), then drives useNotes insert / update / remove
+ * attaches it to a StorageContext of the test's own, carrying the writer id the
+ * write verbs stamp with (no session store creates one here), then drives
+ * useNotes insert / update / remove
  * and asserts the registry hydrate re-reads the persisted, decrypted rows. A
  * fresh replaceAll([]) before each hydrate proves the docs come back from the
  * replica, not stale in-memory Map state.
@@ -12,13 +13,12 @@
 import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import {
-  clearLocalStore,
+  deactivateStorageContext,
   deriveIdentity,
   hasStore,
   LocalStore,
   mintRecordEncryption,
-  setLocalStore,
-  setWriterId
+  StorageContext
 } from '@interop/was-react'
 import { COLLECTIONS } from '../../src/app.config'
 import { DEV_SEED } from '../../src/dev/devSeed'
@@ -26,6 +26,11 @@ import { registry, useNotes, type Note } from '../../src/stores/notes'
 
 let dbCounter = 0
 let store: LocalStore | null = null
+/**
+ * The session-scoped context the entity actions resolve through; attaching a
+ * store makes it the active one.
+ */
+let context: StorageContext
 let dbName = ''
 /** The minted encryption descriptors of each test database, by db name. */
 const descriptorsByDb = new Map<
@@ -101,27 +106,26 @@ async function openStore(name: string): Promise<LocalStore> {
     dbName: name,
     descriptors
   })
-  setLocalStore(opened)
+  context.attachStore(opened)
   return opened
 }
 
 beforeEach(async () => {
   // No session store is created here (the replica is driven directly), so the
-  // writer id the write verbs stamp with has to be installed by hand.
-  setWriterId(TEST_WRITER_ID)
+  // context carrying the writer id the write verbs stamp with is built by hand.
+  context = new StorageContext({ registry, writerId: TEST_WRITER_ID })
   dbName = `byoe-notes-test-${++dbCounter}`
   store = await openStore(dbName)
   useNotes.getState().replaceAll([])
 })
 
 afterEach(async () => {
+  context.detachStore()
   if (store) {
     await store.close()
     store = null
   }
-  if (hasStore()) {
-    clearLocalStore()
-  }
+  deactivateStorageContext(context)
 })
 
 describe('notes store round-trip through the encrypted LocalStore', () => {
@@ -190,8 +194,8 @@ describe('notes store round-trip through the encrypted LocalStore', () => {
     const note = makeNote('Durable note')
     await useNotes.getState().insert(note)
 
+    context.detachStore()
     await store!.close()
-    clearLocalStore()
 
     store = await openStore(dbName)
 
