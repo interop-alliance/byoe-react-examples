@@ -35,6 +35,13 @@
   logout-and-erase followed by a login in the same page reopened the replica on
   a closed Dexie instance and failed with `DatabaseClosedError` (rxdb #8793,
   fixed in 17.5.0).
+- Both examples: upgrade `@interop/was-react` to `^0.24.0`, which speaks WAS
+  v0.5 (a collection's encryption descriptor, public `indexes`, and encrypted
+  `custom` envelope live on one Collection Metadata object). App code is
+  unchanged. A server still on WAS v0.4 no longer works.
+- Notes: bump the `was-teaching-server` devDependency to `^0.34.0`, which serves
+  the Collection Metadata object and admits its writes under per-collection
+  grants.
 
 ### Fixed
 

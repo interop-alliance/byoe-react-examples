@@ -47,7 +47,9 @@ test('persists typed text across a reload', async ({ page }) => {
   await page.waitForTimeout(SAVE_DELAY_MS)
   await page.reload()
   await bootToEditor(page)
-  await expect(page.getByTestId('editor')).toHaveValue('hello local-first world')
+  await expect(page.getByTestId('editor')).toHaveValue(
+    'hello local-first world'
+  )
 })
 
 test('exports the document as a tagged JSON file', async ({ page }) => {
@@ -69,7 +71,9 @@ test('exports the document as a tagged JSON file', async ({ page }) => {
   expect(body.document.text).toBe('exported text')
 })
 
-test('imports a document file, replacing the current text', async ({ page }) => {
+test('imports a document file, replacing the current text', async ({
+  page
+}) => {
   await page.getByTestId('editor').fill('original text')
 
   const exported = {

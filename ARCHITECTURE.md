@@ -1,14 +1,15 @@
 # Architecture
 
 The repository layout and module map for the byoe-react-examples workspace. For
-contribution conventions see [CONTRIBUTING.md](CONTRIBUTING.md); for agent-facing
-rules (commands, tests, repo-specific dos and don'ts) see [AGENTS.md](AGENTS.md).
+contribution conventions see [CONTRIBUTING.md](CONTRIBUTING.md); for
+agent-facing rules (commands, tests, repo-specific dos and don'ts) see
+[AGENTS.md](AGENTS.md).
 
 ## Repository layout
 
 - `examples/save-file/` -- tier 1 ("Text Editor"): one app-private document via
-  `defineDocumentApp`/`useAppDocument`, local-first, file export/import, optional
-  "Save to Web Spaces" wallet connect. Offline Playwright suite only.
+  `defineDocumentApp`/`useAppDocument`, local-first, file export/import,
+  optional "Save to Web Spaces" wallet connect. Offline Playwright suite only.
 - `examples/notes/` -- tier 2 ("BYOE Notes", the original template app):
   - `src/app.config.ts` -- env-var exports and the one `WasAppConfig` (app name,
     credential type/vocab, `COLLECTIONS`, `onboarding` mode). First stop when
