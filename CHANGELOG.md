@@ -4,6 +4,38 @@
 
 ### Changed
 
+- Both examples: upgrade `@interop/was-react` to `^0.30.0` (was-client 0.97,
+  was-sync 0.10). `WasClient` now takes the server's Spaces Repository URL, so
+  the notes provisioning script hands `provisionDevGrants`
+  `<SERVER_URL>/spaces/` while `SERVER_URL` itself stays the server's base URL.
+  The persisted session record now stores that base URL under `baseUrl` in place
+  of `serverUrl`, so a browser that ran an earlier build is logged out once on
+  reload and logs in again. App code is otherwise unchanged.
+- Both examples: upgrade `@interop/was-react` to `^0.28.0` (was-client 0.96,
+  was-sync 0.9). App code is unchanged: the examples build no client from a
+  zcap, inspect no grant's `allowedAction`, classify no denied read, and never
+  imported `isAuthError` or `remoteDescriptorSource`. `rxdb` is now an optional
+  peer of the library; both examples already list it as a direct dependency.
+  Every `edv` collection is now read through a verifying descriptor source
+  checked against the Space owner's did:webvh log, so dev-connect does more
+  round trips before the connected replica opens. The replica schema changed
+  again (server write stamp, row-level `writerId`), so a browser that ran an
+  earlier build must clear its local data and log in again once.
+- Notes: the node store test's encryption-at-rest check scans every IndexedDB
+  object store on fake-indexeddb (anchored on the public `envelopeIdFor`)
+  instead of reaching the RxDB collection through `rxCollection`, which is
+  internal from 0.28.0 on.
+- Notes: the real-server replication specs wait for the synced state before
+  writing. A write issued while dev-connect swaps the anonymous replica for the
+  connected one has no attached store and rejects.
+- Notes: the wallet tier's three ports read `APP_E2E_PORT`, `WALLET_E2E_PORT`,
+  and `WAS_E2E_PORT` (defaults unchanged), so a run can sidestep a port another
+  checkout holds.
+- Notes: upgrade `was-teaching-server` to `^0.42.2`, which answers a Resource
+  write with the stamped body was-sync 0.9's push ack reads.
+  `test/lib/startWasServer.ts` opens its backend through the static
+  `FileSystemBackend.open()` factory, since the constructor is protected from
+  0.40.0 on.
 - Both examples: upgrade `@interop/was-react` to `^0.14.0`. The entity store's
   persisted write verbs (`insert` / `update` / `upsert`) now stamp the
   last-write-wins fields `updatedAt` / `writerId` themselves.

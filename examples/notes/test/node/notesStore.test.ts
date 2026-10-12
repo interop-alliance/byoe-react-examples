@@ -110,6 +110,41 @@ async function openStore(name: string): Promise<LocalStore> {
   return opened
 }
 
+/**
+ * Serializes every record of every object store of every IndexedDB database,
+ * the replica's storage as it sits on disk, so the encryption-at-rest check
+ * reads nothing through the library.
+ *
+ * @returns {Promise<string>}
+ */
+async function dumpIndexedDb(): Promise<string> {
+  const records: unknown[] = []
+  for (const { name } of await indexedDB.databases()) {
+    if (!name) {
+      continue
+    }
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open(name)
+      request.onsuccess = () => resolve(request.result)
+      request.onerror = () => reject(request.error)
+    })
+    const storeNames = Array.from(db.objectStoreNames)
+    if (storeNames.length > 0) {
+      const tx = db.transaction(storeNames, 'readonly')
+      for (const storeName of storeNames) {
+        const rows = await new Promise<unknown[]>((resolve, reject) => {
+          const request = tx.objectStore(storeName).getAll()
+          request.onsuccess = () => resolve(request.result)
+          request.onerror = () => reject(request.error)
+        })
+        records.push(...rows)
+      }
+    }
+    db.close()
+  }
+  return JSON.stringify(records)
+}
+
 beforeEach(async () => {
   // No session store is created here (the replica is driven directly), so the
   // context carrying the writer id the write verbs stamp with is built by hand.
@@ -180,13 +215,18 @@ describe('notes store round-trip through the encrypted LocalStore', () => {
     expectStoredNote(byId.get(keep.id), keep)
   })
 
-  it('encrypts at rest: no note text in the stored envelope', async () => {
+  it('encrypts at rest: no note text anywhere in IndexedDB', async () => {
     const note = makeNote('distinctive-oat-milk-token')
     await useNotes.getState().insert(note)
 
-    const rows = await store!.rxCollection('notes').find().exec()
-    expect(rows).toHaveLength(1)
-    const raw = JSON.stringify(rows[0]!.toMutableJSON())
+    // The envelope id anchors the scan on the row this insert wrote; the note
+    // id itself only exists inside the ciphertext.
+    const envelopeId = store!.envelopeIdFor('notes', note.id)
+    expect(envelopeId).toBeDefined()
+
+    const raw = await dumpIndexedDb()
+    expect(raw).toContain(envelopeId)
+    expect(raw).not.toContain(note.id)
     expect(raw).not.toContain('distinctive-oat-milk-token')
   })
 

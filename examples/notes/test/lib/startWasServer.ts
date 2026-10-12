@@ -1,8 +1,8 @@
 /**
  * Boots a was-teaching-server for the e2e tiers from the `was-teaching-server`
  * npm package (a devDependency of this example) -- no server checkout needed.
- * Composes `createApp` with an explicit `FileSystemBackend` so server state
- * lands in DATA_DIR (git-ignored, wiped on every boot for a deterministic
+ * Composes `createApp` with a `FileSystemBackend` opened on DATA_DIR so state
+ * lands there (git-ignored, wiped on every boot for a deterministic
  * starting state) instead of inside the installed package.
  *
  * Env (all required):
@@ -27,6 +27,6 @@ rmSync(dataDir, { recursive: true, force: true })
 
 const app = createApp({
   serverUrl,
-  backend: new FileSystemBackend({ dataDir, capacityBytes: Infinity })
+  backend: await FileSystemBackend.open({ dataDir, capacityBytes: Infinity })
 })
 await app.listen({ port, host: '0.0.0.0' })

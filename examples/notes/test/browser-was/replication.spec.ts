@@ -24,11 +24,17 @@ function noteRow(page: Page, text: string) {
   return page.getByTestId('notes-list').getByText(text, { exact: true })
 }
 
-/** Opens a fresh profile (isolated IndexedDB) and waits for it to be ready. */
+/**
+ * Opens a fresh profile (isolated IndexedDB) and waits for it to be connected
+ * and synced. The app renders against the anonymous replica first and swaps
+ * to the connected one once dev-connect has verified the Space owner's log and
+ * the collection logs, so a write before that swap would land in the gap.
+ */
 async function openProfile(context: BrowserContext): Promise<Page> {
   const page = await context.newPage()
   await page.goto('/')
   await expect(addInput(page)).toBeVisible({ timeout: 30_000 })
+  await expectSynced(page)
   return page
 }
 

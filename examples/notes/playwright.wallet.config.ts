@@ -11,9 +11,10 @@
  */
 import { defineConfig, devices } from '@playwright/test'
 
-const APP_PORT = 5177
-const WALLET_PORT = 5277
-const WAS_PORT = 3103
+// Overridable so a run can sidestep a port another checkout holds.
+const APP_PORT = Number(process.env.APP_E2E_PORT ?? 5177)
+const WALLET_PORT = Number(process.env.WALLET_E2E_PORT ?? 5277)
+const WAS_PORT = Number(process.env.WAS_E2E_PORT ?? 3103)
 export const APP_URL = `http://localhost:${APP_PORT}`
 export const WALLET_URL = `http://localhost:${WALLET_PORT}`
 export const WAS_URL = `http://localhost:${WAS_PORT}`
