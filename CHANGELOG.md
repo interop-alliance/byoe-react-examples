@@ -4,6 +4,16 @@
 
 ### Changed
 
+- Both examples: upgrade `@interop/was-react` to `^0.31.0` (was-client 0.99.1,
+  was-sync 0.10.1). App code is unchanged: the examples never imported
+  `restoreAppSession`, `RestoredAppSession`, `snapshotWipeTargets`, or
+  `WipeTargets`, which this release renames or reshapes.
+- Workspace: a pnpm `overrides` entry pins `@interop/zcap` to `^11.4.0`.
+  was-client 0.99.1 imports `isValidTarget` from `@interop/zcap` at runtime but
+  declares it only as a devDependency, so without the override pnpm hoisted the
+  11.3.3 that `was-teaching-server` pulls in and the Vite build and the Node
+  tests failed on the missing export. Drop the override once was-react follows a
+  was-client that lists `@interop/zcap` under `dependencies`.
 - Both examples: upgrade `@interop/was-react` to `^0.30.0` (was-client 0.97,
   was-sync 0.10). `WasClient` now takes the server's Spaces Repository URL, so
   the notes provisioning script hands `provisionDevGrants`
