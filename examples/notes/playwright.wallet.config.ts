@@ -55,15 +55,16 @@ export default defineConfig({
       timeout: 60_000
     },
     {
-      // freewallet dev server pointed at the local WAS server (its KMS rides
-      // on the WAS server's in-process /kms facet). The generous timeout
-      // covers a first-use dependency install in the checkout.
+      // freewallet dev server pointed at the local WAS server's Spaces
+      // Repository URL (the wallet derives the base URL, whose /kms facet
+      // hosts its KMS, from it). The generous timeout covers a first-use
+      // dependency install in the checkout.
       command: 'pnpm exec tsx test/lib/startWallet.ts',
       url: WALLET_URL,
       reuseExistingServer: false,
       env: {
         WALLET_PORT: String(WALLET_PORT),
-        VITE_WAS_SERVER_URL: WAS_URL
+        VITE_WAS_SERVER_URL: `${WAS_URL}/spaces/`
       },
       timeout: 300_000
     },

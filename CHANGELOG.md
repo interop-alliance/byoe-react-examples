@@ -8,6 +8,9 @@
   was-sync 0.10.1). App code is unchanged: the examples never imported
   `restoreAppSession`, `RestoredAppSession`, `snapshotWipeTargets`, or
   `WipeTargets`, which this release renames or reshapes.
+- Notes: the wallet tier hands freewallet the WAS server's Spaces Repository URL
+  (`<WAS_URL>/spaces/`) as `VITE_WAS_SERVER_URL`, since freewallet 0.45 derives
+  the base URL from it and refuses a bare base URL at startup.
 - Workspace: a pnpm `overrides` entry pins `@interop/zcap` to `^11.4.0`.
   was-client 0.99.1 imports `isValidTarget` from `@interop/zcap` at runtime but
   declares it only as a devDependency, so without the override pnpm hoisted the
