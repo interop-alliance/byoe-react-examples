@@ -125,11 +125,10 @@ The app runs in one of two auth modes, selected by `VITE_AUTH_MODE`:
   pnpm run provision:dev
   ```
 
-  This creates a dev Space and the app's collections on the server (base URL
-  `http://localhost:3002` by default, override with `SERVER_URL`; the
-  provisioner is handed its Spaces Repository URL, `<SERVER_URL>/spaces/`) and
-  writes the delegated zcaps to the git-ignored `public/dev-grants.local.json`.
-  Then run:
+  This creates a dev Space and the app's collections on the server (base server
+  URL `http://localhost:3002` by default, override with `SERVER_URL`) and writes
+  the delegated zcaps to the git-ignored `public/dev-grants.local.json`. Then
+  run:
 
   ```
   VITE_AUTH_MODE=dev VITE_WAS_DEV_SYNC=true pnpm dev

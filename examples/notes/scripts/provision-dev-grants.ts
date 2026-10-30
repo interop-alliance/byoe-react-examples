@@ -9,9 +9,9 @@
  *   pnpm run provision:dev
  *
  * Reads (all optional):
- *   SERVER_URL       WAS server base URL (default http://localhost:3002); the
- *                    provisioner is handed its Spaces Repository URL,
- *                    `<SERVER_URL>/spaces/`
+ *   SERVER_URL       WAS base server URL (default http://localhost:3002),
+ *                    under which the server lays out `service`, `spaces/`
+ *                    and `space/{id}/`
  *   DEV_GRANTS_OUT   output path (default <repo>/public/dev-grants.local.json)
  */
 import { dirname, join } from 'node:path'
@@ -28,7 +28,7 @@ const OUT_PATH =
 
 async function main(): Promise<void> {
   const result = await provisionDevGrants({
-    serverUrl: `${SERVER_URL}/spaces/`,
+    baseServerUrl: SERVER_URL,
     seed: DEV_SEED,
     collections: COLLECTIONS.map(collection => collection.id),
     spaceName: 'BYOE Notes (dev)',

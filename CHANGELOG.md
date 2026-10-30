@@ -4,6 +4,18 @@
 
 ### Changed
 
+- Both examples: upgrade `@interop/was-react` to `^0.32.0` (was-client 0.101,
+  wallet-core 0.109, was-sync 0.11). A grant's Space is now read off its
+  delegation chain root, so `provisionDevGrants` takes `baseServerUrl` (the
+  server's base URL) in place of the Spaces Repository URL; the notes
+  provisioning script hands it `SERVER_URL` as is. The persisted session record
+  now stores `spaceUrl` in place of `baseUrl` and `spaceId`, so a browser that
+  ran an earlier build is logged out once on reload and logs in again, and
+  was-sync's replication identifier changed, so every replica re-pulls its
+  collection from the server once. App code is otherwise unchanged.
+- Workspace: the pnpm `overrides` entry pinning `@interop/zcap` is dropped.
+  was-client 0.101 lists `@interop/zcap` under `dependencies`.
+
 - Both examples: upgrade `@interop/was-react` to `^0.31.0` (was-client 0.99.1,
   was-sync 0.10.1). App code is unchanged: the examples never imported
   `restoreAppSession`, `RestoredAppSession`, `snapshotWipeTargets`, or

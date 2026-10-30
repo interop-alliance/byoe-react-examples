@@ -7,9 +7,3 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@interop/*'
   - 'was-teaching-server*'
-# Temporary: @interop/was-client 0.99.1 imports isValidTarget from
-# @interop/zcap at runtime but declares it only as a devDependency, so pnpm
-# hoists whichever zcap another package pulls in (11.3.3 lacks the export).
-# Drop once was-react follows a was-client that lists zcap under dependencies.
-overrides:
-  '@interop/zcap': ^11.4.0
